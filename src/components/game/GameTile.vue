@@ -14,9 +14,10 @@ export default defineComponent({
 
 <template>
     <div class="game-tile">
-      {{ term }}
+      {{ term || 'Empty term' }} 
     </div>
-</template>
+  </template>
+  
   
 <style scoped>
   .game-tile {

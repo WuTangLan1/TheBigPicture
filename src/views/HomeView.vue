@@ -1,15 +1,30 @@
 <!-- src\views\HomeView.vue -->
 <script lang="ts">
+import GameContainer from '@/components/game/GameContainer.vue'; 
 
+export default {
+  components: {
+    GameContainer 
+  }
+};
 </script>
 
 <template>
-  <div class="p-6 max-w-sm mx-auto bg-white rounded-xl shadow-md flex items-center space-x-4">
-    <div>
-      <div class="text-xl font-medium text-black">Welcome</div>
-      <p class="text-gray-500">This will be the users homepage</p>
-    </div>
+  <div class="home-page">
+    <GameContainer /> 
   </div>
 </template>
 
+<style scoped>
+.home-view {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
 
+.welcome-section {
+  margin-bottom: 20px;
+}
+
+</style>
