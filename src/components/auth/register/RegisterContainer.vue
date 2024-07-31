@@ -33,15 +33,11 @@ export default {
       isError.value = '';
       try {
         const userCredential = await createUserWithEmailAndPassword(auth, email.value, password.value);
-        console.log("User credential obtained:", userCredential);
-
         const user = userCredential.user;
-        console.log("User ID:", user.uid); 
 
         await setDoc(doc(db, "profiles", user.uid), {
           username: username.value,
         });
-        console.log("Firestore document set for:", user.uid);
 
         isSuccess.value = true;
         registrationText.value = ''; 
@@ -51,7 +47,6 @@ export default {
       } catch (err) {
         const error = err as Error;
         isError.value = error.message;
-        console.error('Error during registration:', error);
         setTimeout(() => {
           isError.value = '';
           isLoading.value = false;

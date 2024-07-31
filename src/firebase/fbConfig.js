@@ -6,19 +6,14 @@ import { getAuth } from 'firebase/auth';
 import { getStorage } from 'firebase/storage';
 
 const firebaseConfig = {
-    apiKey: "AIzaSyDRuJeEWH3F-4hQltn0XQ9sXat2-l8iWqo",
-    authDomain: "thebigpicture-16cf0.firebaseapp.com",
-    projectId: "thebigpicture-16cf0",
-    storageBucket:"thebigpicture-16cf0.appspot.com",
-    messagingSenderId: "927755771231",
-    appId: "1:927755771231:web:e826a64465ae8b7cdfeaea",
-    measurementId: "G-D7SHYQ4480"
+    apiKey: process.env.VUE_APP_API_KEY,
+    authDomain: process.env.VUE_APP_AUTH_DOMAIN,
+    projectId: process.env.VUE_APP_PROJECT_ID,
+    storageBucket: process.env.VUE_APP_STORAGE_BUCKET,
+    messagingSenderId: process.env.VUE_APP_MESSAGING_SENDER_ID,
+    appId: process.env.VUE_APP_APP_ID,
+    measurementId: process.env.VUE_APP_MEASUREMENT_ID
   };
-
-  console.log(process.env.VUE_APP_PROJECT_ID);
-  console.log(process.env);
-   
-
 
 const app = initializeApp(firebaseConfig);
 
