@@ -1,6 +1,8 @@
 <!-- src\components\game\GameTile.vue -->
+<!-- GameTile.vue -->
 <script lang="ts">
 import { defineComponent, PropType } from 'vue';
+import { useGameStore } from '@/stores/gameStore';
 
 export default defineComponent({
   props: {
@@ -8,16 +10,25 @@ export default defineComponent({
       type: String as PropType<string>,
       required: true
     }
+  },
+  setup(props) {
+    const gameStore = useGameStore();
+
+    const selectTile = () => {
+      gameStore.selectTile(props.term);
+    };
+
+    return { selectTile };
   }
 });
 </script>
 
 <template>
-    <div class="game-tile">
-      {{ term || 'Empty term' }} 
-    </div>
-  </template>
-  
+  <div class="game-tile" @click="selectTile">
+    {{ term || 'Empty term' }}
+  </div>
+</template>
+
   
   <style scoped>
   .game-tile {

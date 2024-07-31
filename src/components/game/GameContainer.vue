@@ -3,10 +3,12 @@
 import { defineComponent, computed, onMounted } from 'vue';
 import { useGameStore } from '@/stores/gameStore';
 import GameTile from './GameTile.vue';
+import GameInfo from './GameInfo.vue';
 
 export default defineComponent({
   components: {
-    GameTile
+    GameTile,
+    GameInfo
   },
   setup() {
     const gameStore = useGameStore();
@@ -28,6 +30,7 @@ export default defineComponent({
   <div class="game-container">
     <GameTile v-for="(term, index) in gameTerms" :key="index" :term="term" />
   </div>
+  <GameInfo />
 </template>
 
 <style scoped>

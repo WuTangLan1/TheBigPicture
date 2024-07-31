@@ -6,7 +6,10 @@ import shuffleArray from '@/utils/shuffleArray';
 
 export const useGameStore = defineStore('gameStore', {
   state: () => ({
-    currentGame: [] as string[],
+    currentGame: [] as string[],  
+    selectedTiles: [] as string[],  
+    lives: 3,
+    gameStatus: 'playing' 
   }),
   actions: {
     async fetchTodayGame() {
@@ -17,10 +20,29 @@ export const useGameStore = defineStore('gameStore', {
       const gameSnapshot = await getDocs(q);
       if (gameSnapshot.docs.length > 0) {
         const gameData = gameSnapshot.docs[0].data();
-        this.currentGame = shuffleArray([1, 2, 3, 4, 5, 6, 7, 8, 9].map(index => gameData[index.toString()] || ''));
+        this.currentGame = shuffleArray([1, 2, 3, 4, 5, 6, 7, 8, 9].map(index => gameData[index.toString()] as string || ''));
       } else {
         this.currentGame = [];
       }
+    },
+    selectTile(tile: string) {  
+      if (!this.selectedTiles.includes(tile)) {
+        this.selectedTiles.push(tile);
+        if (this.selectedTiles.length === this.currentGame.length) {
+          this.gameStatus = 'won';
+        }
+      } else {
+        this.lives--;
+        if (this.lives === 0) {
+          this.gameStatus = 'lost';
+        }
+      }
+    },
+    resetGame() {
+      this.selectedTiles = [];
+      this.lives = 3;
+      this.gameStatus = 'playing';
+      this.fetchTodayGame();
     }
   }
 });
