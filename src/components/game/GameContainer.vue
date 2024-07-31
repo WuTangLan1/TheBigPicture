@@ -41,7 +41,6 @@ export default defineComponent({
   background-color: #f4f4f4;
   margin: auto; 
   max-width: 960px; 
-  width: 100%; 
 }
 </style>
 
