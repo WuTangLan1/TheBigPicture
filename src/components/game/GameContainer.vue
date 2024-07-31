@@ -16,7 +16,6 @@ export default defineComponent({
     });
     
     const gameTerms = computed(() => {
-        console.log("Game Terms: ", gameStore.currentGame); // Debugging
         return gameStore.currentGame;
     });
 
@@ -31,24 +30,19 @@ export default defineComponent({
   </div>
 </template>
 
-  
 <style scoped>
-    .game-container {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
-      justify-items: center;
-      align-items: center;
-      padding: 20px;
-      transform: rotate(45deg); 
-    }
-    
-    .game-container::before {
-      content: '';
-      width: 100%;
-      padding-top: 100%;
-      grid-column: 1 / 4;
-      grid-row: 1 / 4;
-    }
+.game-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); 
+  gap: 20px; 
+  padding: 20px;
+  justify-content: center; 
+  align-items: center; 
+  background-color: #f4f4f4;
+  margin: auto; 
+  max-width: 960px; 
+  width: 100%; 
+}
 </style>
-  
+
+
