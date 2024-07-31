@@ -5,4 +5,6 @@ declare module '*.vue' {
   export default component
 
   declare module '@/firebase/fbConfig.js'
+
+  declare module '@/utils/shuffleArray.js'
 }
