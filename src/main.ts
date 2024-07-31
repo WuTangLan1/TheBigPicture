@@ -6,7 +6,14 @@ import router from './router';
 import './tailwind.css';
 import { useDark, useToggle } from '@vueuse/core';
 
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { faSpinner, faCheckCircle, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+
+library.add(faSpinner, faCheckCircle, faTimesCircle);
+
 const app = createApp(App).use(router);
+app.component('font-awesome-icon', FontAwesomeIcon);
 app.config.globalProperties.$sanitize = DOMPurify.sanitize;
 
 const isDark = useDark({

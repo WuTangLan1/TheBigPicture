@@ -13,9 +13,7 @@ export default {
       throw new Error('toggleDark not provided!');
     }
 
-    // Adding a console log to check if the function is called
     const toggle = () => {
-      console.log('Toggling Dark Mode');
       toggleDark();
     };
 
