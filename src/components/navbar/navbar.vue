@@ -42,7 +42,7 @@ export default {
 }
 
 .dark .navbar {
-  background-color: #1f2937;
+  background-color: #2e4058;
   color: #f9fafb; 
 }
 

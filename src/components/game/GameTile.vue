@@ -41,22 +41,23 @@ export default defineComponent({
   }
 
   .dark .game-tile {
-    background-color: #7c7878; 
+    background-color: #787c79; 
     border-color: #666; 
     color: #ddd;
     box-shadow: 0 2px 4px rgba(255,255,255,0.1);
     }
     
   .game-tile:hover {
-    background-color: #e8e8e8;
+    background-color: #afc4ee;
+    box-shadow: 0 2px 4px rgba(17, 14, 59, 0.651);
     transform: translateY(-3px);
     box-shadow: 0 4px 6px rgba(0,0,0,0.1);
   }
 
   .dark .game-tile:hover {
-    background-color: #193f79;
+    background-color: #2e4058;
     transform: translateY(-3px);
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 6px rgb(115, 152, 201);
   }
   
   
