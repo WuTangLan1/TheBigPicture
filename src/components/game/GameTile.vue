@@ -39,12 +39,26 @@ export default defineComponent({
     justify-content: center;
     min-height: 100px; 
   }
-  
+
+  .dark .game-tile {
+    background-color: #7c7878; 
+    border-color: #666; 
+    color: #ddd;
+    box-shadow: 0 2px 4px rgba(255,255,255,0.1);
+    }
+    
   .game-tile:hover {
     background-color: #e8e8e8;
     transform: translateY(-3px);
     box-shadow: 0 4px 6px rgba(0,0,0,0.1);
   }
+
+  .dark .game-tile:hover {
+    background-color: #193f79;
+    transform: translateY(-3px);
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  }
+  
   
 
   @media (max-width: 750px) {

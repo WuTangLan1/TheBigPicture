@@ -38,9 +38,12 @@ export default defineComponent({
   padding: 20px;
   justify-content: center; 
   align-items: center; 
-  background-color: #f4f4f4;
   margin: auto; 
   max-width: 960px; 
+}
+
+.dark .game-container {
+  color: #fff; 
 }
 </style>
 
