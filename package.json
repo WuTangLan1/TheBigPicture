@@ -15,6 +15,7 @@
     "core-js": "^3.8.3",
     "dompurify": "^3.1.6",
     "firebase": "^10.12.4",
+    "pinia": "^2.2.0",
     "vue": "^3.2.13",
     "vue-class-component": "^8.0.0-0",
     "vue-router": "^4.0.3"
