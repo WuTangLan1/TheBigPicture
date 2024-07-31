@@ -21,7 +21,7 @@ export default defineComponent({
   
   <style scoped>
   .game-tile {
-    background-color: #ffffff;
+    background-color: #dadada;
     border: 1px solid #ccc;
     border-radius: 8px;
     padding: 10px 20px; 

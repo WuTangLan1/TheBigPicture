@@ -1,11 +1,21 @@
 <!-- src\components\navbar\navbar.vue -->
 
 <script lang="ts">
+import {inject, Ref, computed} from 'vue';
 import DarkModeToggle from './darkmode/DarkModeToggle.vue';
 export default {
   name: 'Nav-bar',
   components : {
     DarkModeToggle
+  },
+  setup() {
+    const isDark = inject('isDark') as Ref<boolean>;
+
+    const logoSrc = computed(() => {
+      return isDark.value ? require('@/assets/logos/darklogo.png') : require('@/assets/logos/lightlogo.png');
+    });
+
+      return { isDark, logoSrc}
   }
 }
 </script>
@@ -15,7 +25,7 @@ export default {
   <nav class="navbar">
     <div class="container">
       <router-link to="/" class="navbar-logo">
-        <img src="@/assets/logos/sampleLogo.png" alt="Sample Logo" class="logo">
+        <img :src="logoSrc" alt="Logo" class="logo">
       </router-link>
 
       <div class="navbar-links">
