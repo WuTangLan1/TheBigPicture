@@ -9,7 +9,8 @@ export const useGameStore = defineStore('gameStore', {
     currentGame: [] as string[],  
     selectedTiles: [] as string[],  
     lives: 3,
-    gameStatus: 'playing' 
+    gameStatus: 'playing',
+    correctSequence: [] as string[], // Assume this is the correct sequence of tiles for simplicity
   }),
   actions: {
     async fetchTodayGame() {
@@ -25,16 +26,21 @@ export const useGameStore = defineStore('gameStore', {
         this.currentGame = [];
       }
     },
-    selectTile(tile: string) {  
-      if (!this.selectedTiles.includes(tile)) {
+    selectTile(tile: string) {
+      const nextCorrectTile = this.correctSequence[this.selectedTiles.length]; // Assuming you have a way to determine the correct next tile
+      if (tile === nextCorrectTile) {
         this.selectedTiles.push(tile);
+        console.log(`Correct! Next tile: ${tile}`);
         if (this.selectedTiles.length === this.currentGame.length) {
           this.gameStatus = 'won';
+          console.log('Congratulations! You won.');
         }
       } else {
         this.lives--;
+        console.log(`Incorrect! You chose ${tile}, but the correct tile was ${nextCorrectTile}`);
         if (this.lives === 0) {
           this.gameStatus = 'lost';
+          console.log('Game Over. You have run out of lives.');
         }
       }
     },
@@ -43,6 +49,7 @@ export const useGameStore = defineStore('gameStore', {
       this.lives = 3;
       this.gameStatus = 'playing';
       this.fetchTodayGame();
+      console.log('Game has been reset.');
     }
   }
 });

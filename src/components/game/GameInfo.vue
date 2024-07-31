@@ -44,8 +44,8 @@ export default defineComponent({
   text-align: center;
   border-radius: 8px;
   box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-  width: calc(100% - 40px);
-  max-width: 600px;
+  width: calc(100% - 70px);
+  max-width: 460px;
   margin-left: auto;
   margin-right: auto;
   display: flex;
