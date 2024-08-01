@@ -48,7 +48,7 @@ export default {
   justify-content: space-between;
   align-items: center;
   height: 80px;
-  padding: 0 20px;
+  padding: 0 10px;
 }
 
 .dark .navbar {

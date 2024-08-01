@@ -74,16 +74,7 @@ export default defineComponent({
     }
     
   .game-tile:hover {
-    background-color: #afc4ee;
-    box-shadow: 0 2px 4px rgba(17, 14, 59, 0.651);
     transform: translateY(-3px);
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-  }
-
-  .dark .game-tile:hover {
-    background-color: #2e4058;
-    transform: translateY(-3px);
-    box-shadow: 0 4px 6px rgb(115, 152, 201);
   }
   
   .starting-tile {
@@ -134,7 +125,7 @@ export default defineComponent({
   }
 
   .incorrect-tile {
-    animation: flash-red 1s;
+    animation: flash-red 2s;
   }
 
   @keyframes flash-red {
