@@ -1,7 +1,6 @@
 <!-- src\components\game\GameTile.vue -->
-<!-- GameTile.vue -->
 <script lang="ts">
-import { defineComponent, PropType } from 'vue';
+import { defineComponent, PropType, computed } from 'vue';
 import { useGameStore } from '@/stores/gameStore';
 
 export default defineComponent({
@@ -18,38 +17,41 @@ export default defineComponent({
       gameStore.selectTile(props.term);
     };
 
-    return { selectTile };
+    const isStartingTile = computed(() => gameStore.currentGame[0] === props.term);
+    const isEndingTile = computed(() => gameStore.currentGame[gameStore.currentGame.length - 1] === props.term);
+
+    return { selectTile, isStartingTile, isEndingTile };
   }
 });
 </script>
 
 <template>
-  <div class="game-tile" @click="selectTile">
+  <div :class="['game-tile', {'starting-tile': isStartingTile, 'ending-tile': isEndingTile}]" @click="selectTile">
     {{ term || 'Empty term' }}
   </div>
 </template>
 
-  
-  <style scoped>
-  .game-tile {
-    background-color: #dadada;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    padding: 5px 15px; 
-    font-size: 14px; 
-    text-align: center;
-    font-family: 'Arial', sans-serif;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-    transition: all 0.3s ease;
-    height: auto;
-    min-width: 120px; 
-    max-width: 200px; 
-    margin: 0 auto; 
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 100px; 
-  }
+
+<style scoped>
+.game-tile {
+  background-color: #f1f0f5;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 5px 15px;
+  font-size: 14px;
+  text-align: center;
+  font-family: 'Arial', sans-serif;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  transition: all 0.3s ease;
+  height: auto;
+  min-width: 120px;
+  max-width: 200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100px;
+  } 
 
   .dark .game-tile {
     background-color: #787c79; 
@@ -71,7 +73,25 @@ export default defineComponent({
     box-shadow: 0 4px 6px rgb(115, 152, 201);
   }
   
-  
+  .starting-tile {
+  border: 2px solid green;
+  background-color: #838383;
+  }
+
+  .ending-tile {
+    border: 2px solid blue;
+    background-color: #838383;
+  }
+
+  .dark .starting-tile {
+  border: 2px solid green;
+  background-color: #838383;
+  }
+
+  .dark .ending-tile {
+    border: 2px solid blue;
+    background-color: #838383;
+  }
 
   @media (max-width: 750px) {
         .game-tile {

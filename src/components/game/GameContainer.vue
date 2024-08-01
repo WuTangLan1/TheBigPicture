@@ -21,14 +21,14 @@ export default defineComponent({
         return gameStore.currentGame;
     });
 
-    return { gameTerms };
+    return { gameTerms, gameStore };
     }
 });
 </script>
 
 <template>
   <div class="game-container">
-    <GameTile v-for="(term, index) in gameTerms" :key="index" :term="term" />
+    <GameTile v-for="(term, index) in gameStore.shuffledGame" :key="index" :term="term" :index="index" />
   </div>
   <GameInfo />
 </template>

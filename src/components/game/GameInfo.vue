@@ -24,7 +24,7 @@ export default defineComponent({
     <div class="status-panel">
       <div class="info-section">
         <div class="selected-tile-info">
-        <span class="current-tile">{{ currentTile || 'None' }}</span>
+        <span class="current-tile">{{ currentTile || 'None Selected' }}</span>
         </div>
         <div class="lives-display">
           <span v-for="life in lives" :key="life" class="heart">
