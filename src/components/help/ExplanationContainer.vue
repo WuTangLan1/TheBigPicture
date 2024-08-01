@@ -1,37 +1,22 @@
 <!-- src\components\help\ExplanationContainer.vue -->
-<script lang="ts">
-import { inject, Ref, computed } from 'vue';
-
-export default {
-  setup() {
-    const isDark = inject('isDark') as Ref<boolean>;
-
-    const logoSrc = computed(() => {
-      return isDark.value ? require('@/assets/logos/darklogo.png') : require('@/assets/logos/lightlogo.png');
-    });
-
-    return { logoSrc };
-  }
-}
-</script>
 
 <template>
   <div class="explanation-container">
     <h2>
-      Welcome to <img :src="logoSrc" alt="Logo" class="logo">
+      Welcome to Full Circle
     </h2>
-    <ul>
+    <ol>
       <li>Select the correct tile to follow the green tile until the blue one is reached.</li>
       <li>Each correct selection will turn green.</li>
       <li>Avoid incorrect choices to maintain your lives.</li>
       <li>Correctly click the correct order of tiles to win the game.</li>
-    </ul>
+    </ol>
   </div>
 </template>
 
 <style scoped>
 .explanation-container {
-  background-color: #afc4ee;
+  background-color: #e0e7f3;
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0,0,0,0.1);
@@ -47,24 +32,55 @@ export default {
 }
 
 .logo {
-  max-height: 50px; 
+  max-height: 50px;
   margin-bottom: 10px;
+  vertical-align: middle; 
 }
 
 h2 {
-  color: #4CAF50;
+  color: #000000;
 }
 
-p, li {
+.dark h2 {
+  color: white;
+}
+
+ol {
+  list-style: none; 
+  counter-reset: list-counter;
+  padding: 0;
+}
+
+li {
   color: #333;
   font-size: 16px;
+  counter-increment: list-counter; 
+  position: relative; 
+}
+
+li::before {
+  content: counter(list-counter); 
+  background: #afc4ee; 
+  color: white; 
+  font-weight: bold; 
+  width: 25px;
+  height: 25px; 
+  border-radius: 50%; 
+  display: inline-block;
+  text-align: center;
+  line-height: 25px; 
+  margin-right: 10px; 
+}
+
+.dark li::before {
+  background: #4CAF50; 
 }
 
 .dark p, .dark li {
   color: #f9fafb;
 }
 
-ul {
+ul, ol {
   text-align: left;
   margin-top: 10px;
 }
