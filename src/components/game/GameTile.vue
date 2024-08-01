@@ -14,10 +14,11 @@ export default defineComponent({
   setup(props) {
     const gameStore = useGameStore();
 
-    const isStartingTile = computed(() => props.term === gameStore.currentGame[0]);
-    const isEndingTile = computed(() => props.term === gameStore.currentGame[gameStore.currentGame.length - 1]);
-    const isCorrect = computed(() => gameStore.tileStatus[props.term]); 
-    const isInteractive = computed(() => gameStore.interactiveTiles.includes(props.term));
+    const isStartingTile = computed(() => props.index === 0);
+    const isEndingTile = computed(() => props.index === gameStore.shuffledGame.length - 1);
+    const isInteractive = computed(() => !isStartingTile.value && !isEndingTile.value && gameStore.interactiveTiles.includes(props.term));
+    const isCorrect = computed(() => gameStore.tileStatus[props.term].correct);
+    const isIncorrect = computed(() => gameStore.tileStatus[props.term].incorrect);
 
     const selectTile = () => {
       if (isInteractive.value) {
@@ -25,7 +26,7 @@ export default defineComponent({
       }
     };
 
-    return { selectTile, isStartingTile, isEndingTile, isInteractive, isCorrect };
+    return { selectTile, isStartingTile, isEndingTile, isInteractive, isCorrect, isIncorrect };
   }
 });
 </script>
@@ -36,7 +37,8 @@ export default defineComponent({
                 {'starting-tile': isStartingTile, 
                  'ending-tile': isEndingTile, 
                  'non-interactive': !isInteractive, 
-                 'correct-tile': isCorrect
+                 'correct-tile': isCorrect,
+                 'incorrect-tile': isIncorrect
                 }]" 
        @click="selectTile">
     {{ term || 'Empty term' }}
@@ -128,6 +130,15 @@ export default defineComponent({
     background-color: green; 
     cursor: default; 
     pointer-events: none; 
+  }
+
+  .incorrect-tile {
+    animation: flash-red 1s;
+  }
+
+  @keyframes flash-red {
+    0%, 100% { background-color: #f1f0f5; }
+    50% { background-color: red; }
   }
 
   @media (max-width: 750px) {

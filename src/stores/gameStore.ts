@@ -10,7 +10,7 @@ export const useGameStore = defineStore('gameStore', {
     shuffledGame: [] as string[],
     interactiveTiles: [] as string[],
     selectedTiles: [] as string[],
-    tileStatus: {} as Record<string, boolean>,
+    tileStatus: {} as Record<string, { correct: boolean, incorrect: boolean }>,
     lives: 3,
     gameStatus: 'playing',
   }),
@@ -28,10 +28,10 @@ export const useGameStore = defineStore('gameStore', {
         const middleTiles = shuffleArray(fullArray.slice(1, -1));
         this.shuffledGame = [fullArray[0], ...middleTiles, fullArray[8]];
         this.interactiveTiles = middleTiles;
-        this.tileStatus = this.currentGame.reduce<Record<string, boolean>>((acc, term) => {
-          acc[term] = false; 
+        this.tileStatus = this.currentGame.reduce((acc, term) => {
+          acc[term] = { correct: false, incorrect: false };
           return acc;
-        }, {});
+        }, {} as Record<string, { correct: boolean, incorrect: boolean }>);
       } else {
         this.currentGame = [];
         this.shuffledGame = [];
@@ -46,13 +46,17 @@ export const useGameStore = defineStore('gameStore', {
       const correctTile = this.currentGame[nextIndex + 1]; 
       if (tile === correctTile) {
         this.selectedTiles.push(tile);
-        this.tileStatus[tile] = true; 
+        this.tileStatus[tile].correct = true;
         if (this.selectedTiles.length === this.interactiveTiles.length) {
           this.gameStatus = 'won';
           console.log('Congratulations! You won.');
         }
       } else {
         this.lives--;
+        this.tileStatus[tile].incorrect = true; 
+        setTimeout(() => {
+          this.tileStatus[tile].incorrect = false;
+        }, 1000); 
         console.log(`Incorrect! You chose ${tile}, but the correct tile was ${correctTile}`);
         if (this.lives === 0) {
           this.gameStatus = 'lost';
@@ -62,10 +66,10 @@ export const useGameStore = defineStore('gameStore', {
     },
     resetGame() {
       this.selectedTiles = [];
-      this.tileStatus = this.currentGame.reduce<Record<string, boolean>>((acc, term) => {
-        acc[term] = false;
+      this.tileStatus = this.currentGame.reduce((acc, term) => {
+        acc[term] = { correct: false, incorrect: false };
         return acc;
-      }, {});
+      }, {} as Record<string, { correct: boolean, incorrect: boolean }>);
       this.lives = 3;
       this.gameStatus = 'playing';
       this.fetchTodayGame();
