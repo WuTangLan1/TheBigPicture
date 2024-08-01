@@ -21,8 +21,14 @@ export const useGameStore = defineStore('gameStore', {
       const gameSnapshot = await getDocs(q);
       if (gameSnapshot.docs.length > 0) {
         const gameData = gameSnapshot.docs[0].data();
-        this.currentGame = [1, 2, 3, 4, 5, 6, 7, 8, 9].map(index => gameData[index.toString()] as string || '');
-        this.shuffledGame = shuffleArray([...this.currentGame]);
+        const fullArray = [1, 2, 3, 4, 5, 6, 7, 8, 9].map(index => gameData[index.toString()] as string || '');
+        if (fullArray.length > 2) {
+          const middle = shuffleArray(fullArray.slice(1, -1));
+          this.shuffledGame = [fullArray[0], ...middle, fullArray.at(-1)];
+        } else {
+          this.shuffledGame = fullArray; // Not enough items to shuffle
+        }
+        this.currentGame = fullArray;
       } else {
         this.currentGame = [];
         this.shuffledGame = [];

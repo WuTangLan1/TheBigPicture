@@ -8,7 +8,8 @@ export default defineComponent({
     term: {
       type: String as PropType<string>,
       required: true
-    }
+    },
+    index: Number // Make sure to pass the index
   },
   setup(props) {
     const gameStore = useGameStore();
@@ -17,13 +18,14 @@ export default defineComponent({
       gameStore.selectTile(props.term);
     };
 
-    const isStartingTile = computed(() => gameStore.currentGame[0] === props.term);
-    const isEndingTile = computed(() => gameStore.currentGame[gameStore.currentGame.length - 1] === props.term);
+    const isStartingTile = computed(() => gameStore.shuffledGame.indexOf(props.term) === 0);
+    const isEndingTile = computed(() => gameStore.shuffledGame.indexOf(props.term) === gameStore.shuffledGame.length - 1);
 
     return { selectTile, isStartingTile, isEndingTile };
   }
 });
 </script>
+
 
 <template>
   <div :class="['game-tile', {'starting-tile': isStartingTile, 'ending-tile': isEndingTile}]" @click="selectTile">
