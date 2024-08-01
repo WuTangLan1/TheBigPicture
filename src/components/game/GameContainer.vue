@@ -28,26 +28,34 @@ export default defineComponent({
 
 <template>
   <div class="game-container">
-    <GameTile v-for="(term, index) in gameStore.shuffledGame" :key="index" :term="term" :index="index" />
+    <div class="tiles">
+      <GameTile v-for="(term, index) in gameStore.shuffledGame" :key="index" :term="term" :index="index" />
+    </div>
+    <GameInfo />
   </div>
-  <GameInfo />
 </template>
 
 <style scoped>
 .game-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px; /* Added gap for spacing between tiles and info */
+  padding: 20px;
+  margin: auto; 
+  max-width: 960px; 
+}
+
+.tiles {
   display: grid;
   grid-template-columns: repeat(3, 1fr); 
   gap: 20px; 
-  padding: 20px;
   justify-content: center; 
   align-items: center; 
-  margin: auto; 
-  max-width: 960px; 
 }
 
 .dark .game-container {
   color: #fff; 
 }
 </style>
-
 

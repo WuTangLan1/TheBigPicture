@@ -24,7 +24,6 @@ export default {
 #app {
   display: flex;
   flex-direction: column;
-  height: 99vh;
   overflow-y: auto;
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -37,7 +36,7 @@ export default {
 @media(min-width: 600px)
 {
   #app {
-    height: 98vh;
+    height: 100vh;
   }
 }
 

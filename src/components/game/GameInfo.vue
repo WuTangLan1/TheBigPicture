@@ -66,7 +66,14 @@ export default defineComponent({
 .current-tile {
   font-weight: bold;
   color: #333;
-  font-size: 18px; 
+  font-size: 18px; /* Default font size for larger screens */
+}
+
+/* Responsive font size for smaller screens */
+@media (max-width: 600px) {
+  .current-tile {
+    font-size: 14px; /* Smaller font size for smaller screens */
+  }
 }
 
 .dark .current-tile {
@@ -91,7 +98,6 @@ button {
   cursor: pointer;
   border-radius: 8px;
   box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-  transition: background-color 0.3s, box-shadow 0.3s;
 }
 
 button:hover {

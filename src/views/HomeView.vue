@@ -31,7 +31,7 @@ export default {
 </script>
 
 <template>
-  <div class="home-page">
+  <div class="home-view">
     <ExplanationContainer />
     <GameContainer /> 
     <GameOverModal :visible="isGameOver" />
@@ -42,16 +42,15 @@ export default {
 .home-view {
   display: flex;
   flex-direction: column;
-  align-items: center; /* Center align the items horizontally */
-  justify-content: center; /* Adjust the distribution of children along the column */
-  width: 100%;
-  min-height: 100vh; /* Make sure it takes at least the full height of the viewport */
+  align-items: center; 
+  justify-content: center; 
   padding: 20px;
   box-sizing: border-box;
+  margin-bottom: 50px;
+  gap: 20px; 
 }
 
 .welcome-section {
   margin-bottom: 20px;
 }
-
 </style>
