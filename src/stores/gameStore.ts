@@ -6,9 +6,11 @@ import shuffleArray from '@/utils/shuffleArray';
 
 export const useGameStore = defineStore('gameStore', {
   state: () => ({
-    currentGame: [] as string[], 
-    shuffledGame: [] as string[], 
+    currentGame: [] as string[],
+    shuffledGame: [] as string[],
+    interactiveTiles: [] as string[],
     selectedTiles: [] as string[],
+    tileStatus: {} as Record<string, boolean>,
     lives: 3,
     gameStatus: 'playing',
   }),
@@ -22,24 +24,30 @@ export const useGameStore = defineStore('gameStore', {
       if (gameSnapshot.docs.length > 0) {
         const gameData = gameSnapshot.docs[0].data();
         const fullArray = [1, 2, 3, 4, 5, 6, 7, 8, 9].map(index => gameData[index.toString()] as string || '');
-        if (fullArray.length > 2) {
-          const middle = shuffleArray(fullArray.slice(1, -1));
-          this.shuffledGame = [fullArray[0], ...middle, fullArray.at(-1)];
-        } else {
-          this.shuffledGame = fullArray; // Not enough items to shuffle
-        }
         this.currentGame = fullArray;
+        const middleTiles = shuffleArray(fullArray.slice(1, -1));
+        this.shuffledGame = [fullArray[0], ...middleTiles, fullArray[8]];
+        this.interactiveTiles = middleTiles;
+        this.tileStatus = this.currentGame.reduce<Record<string, boolean>>((acc, term) => {
+          acc[term] = false; 
+          return acc;
+        }, {});
       } else {
         this.currentGame = [];
         this.shuffledGame = [];
+        this.interactiveTiles = [];
+        this.tileStatus = {};
       }
     },
     selectTile(tile: string) {
+      if (!this.interactiveTiles.includes(tile)) return;
+
       const nextIndex = this.selectedTiles.length;
-      const correctTile = this.currentGame[nextIndex];
+      const correctTile = this.currentGame[nextIndex + 1]; 
       if (tile === correctTile) {
         this.selectedTiles.push(tile);
-        if (this.selectedTiles.length === this.currentGame.length) {
+        this.tileStatus[tile] = true; 
+        if (this.selectedTiles.length === this.interactiveTiles.length) {
           this.gameStatus = 'won';
           console.log('Congratulations! You won.');
         }
@@ -54,10 +62,13 @@ export const useGameStore = defineStore('gameStore', {
     },
     resetGame() {
       this.selectedTiles = [];
+      this.tileStatus = this.currentGame.reduce<Record<string, boolean>>((acc, term) => {
+        acc[term] = false;
+        return acc;
+      }, {});
       this.lives = 3;
       this.gameStatus = 'playing';
       this.fetchTodayGame();
-      console.log('Game has been reset.');
     }
   }
 });

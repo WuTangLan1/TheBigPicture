@@ -9,30 +9,39 @@ export default defineComponent({
       type: String as PropType<string>,
       required: true
     },
-    index: Number // Make sure to pass the index
+    index: Number
   },
   setup(props) {
     const gameStore = useGameStore();
 
+    const isStartingTile = computed(() => props.term === gameStore.currentGame[0]);
+    const isEndingTile = computed(() => props.term === gameStore.currentGame[gameStore.currentGame.length - 1]);
+    const isCorrect = computed(() => gameStore.tileStatus[props.term]); 
+    const isInteractive = computed(() => gameStore.interactiveTiles.includes(props.term));
+
     const selectTile = () => {
-      gameStore.selectTile(props.term);
+      if (isInteractive.value) {
+        gameStore.selectTile(props.term);
+      }
     };
 
-    const isStartingTile = computed(() => gameStore.shuffledGame.indexOf(props.term) === 0);
-    const isEndingTile = computed(() => gameStore.shuffledGame.indexOf(props.term) === gameStore.shuffledGame.length - 1);
-
-    return { selectTile, isStartingTile, isEndingTile };
+    return { selectTile, isStartingTile, isEndingTile, isInteractive, isCorrect };
   }
 });
 </script>
 
 
 <template>
-  <div :class="['game-tile', {'starting-tile': isStartingTile, 'ending-tile': isEndingTile}]" @click="selectTile">
+  <div :class="['game-tile', 
+                {'starting-tile': isStartingTile, 
+                 'ending-tile': isEndingTile, 
+                 'non-interactive': !isInteractive, 
+                 'correct-tile': isCorrect
+                }]" 
+       @click="selectTile">
     {{ term || 'Empty term' }}
   </div>
 </template>
-
 
 <style scoped>
 .game-tile {
@@ -76,23 +85,49 @@ export default defineComponent({
   }
   
   .starting-tile {
-  border: 2px solid green;
-  background-color: #838383;
+    background-color: green; 
+    color: white;
+    cursor: default; 
+    pointer-events: none; 
   }
 
   .ending-tile {
-    border: 2px solid blue;
-    background-color: #838383;
+    background-color: rgb(64, 70, 160); 
+    color: white;
+    cursor: default; 
+    pointer-events: none; 
   }
 
   .dark .starting-tile {
-  border: 2px solid green;
-  background-color: #838383;
+    background-color: green; 
+    color: white;
+    cursor: default; 
+    pointer-events: none; 
   }
 
   .dark .ending-tile {
-    border: 2px solid blue;
-    background-color: #838383;
+    background-color: rgb(64, 70, 160); 
+    color: white;
+    cursor: default; 
+    pointer-events: none; 
+  }
+
+  .non-interactive {
+    opacity: 0.8;
+    cursor: not-allowed;
+  }
+
+  .game-tile:hover:not(.non-interactive) {
+      background-color: #afc4ee;
+      box-shadow: 0 2px 4px rgba(17, 14, 59, 0.651);
+      transform: translateY(-3px);
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  }
+
+  .correct-tile {
+    background-color: green; 
+    cursor: default; 
+    pointer-events: none; 
   }
 
   @media (max-width: 750px) {
