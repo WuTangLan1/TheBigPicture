@@ -50,12 +50,6 @@ export default {
   min-height: 100vh; 
 }
 
-@media(min-width: 600px) {
-  #app {
-    height: 100vh;
-  }
-}
-
 .dark #app {
   background-color: #111827;
   color: #f9fafb;
