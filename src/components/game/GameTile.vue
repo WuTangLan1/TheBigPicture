@@ -128,6 +128,7 @@ export default defineComponent({
 
   .correct-tile {
     background-color: green; 
+    color: white;
     cursor: default; 
     pointer-events: none; 
   }
