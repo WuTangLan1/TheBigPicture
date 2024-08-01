@@ -40,7 +40,7 @@ export default defineComponent({
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 20px; /* Added gap for spacing between tiles and info */
+  gap: 20px; 
   padding: 20px;
   margin: auto; 
   max-width: 960px; 

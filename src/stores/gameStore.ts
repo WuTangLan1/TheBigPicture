@@ -13,6 +13,7 @@ export const useGameStore = defineStore('gameStore', {
     tileStatus: {} as Record<string, { correct: boolean, incorrect: boolean }>,
     lives: 3,
     gameStatus: 'playing',
+    isModalVisible: false,
   }),
   actions: {
     async fetchTodayGame() {
@@ -49,6 +50,7 @@ export const useGameStore = defineStore('gameStore', {
         this.tileStatus[tile].correct = true;
         if (this.selectedTiles.length === this.interactiveTiles.length) {
           this.gameStatus = 'won';
+          this.isModalVisible = true;
           console.log('Congratulations! You won.');
         }
       } else {
@@ -60,9 +62,13 @@ export const useGameStore = defineStore('gameStore', {
         console.log(`Incorrect! You chose ${tile}, but the correct tile was ${correctTile}`);
         if (this.lives === 0) {
           this.gameStatus = 'lost';
+          this.isModalVisible = true;
           console.log('Game Over. You have run out of lives.');
         }
       }
+    },
+    closeModal() {
+      this.isModalVisible = false; 
     },
     resetGame() {
       this.selectedTiles = [];

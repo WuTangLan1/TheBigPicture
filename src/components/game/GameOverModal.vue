@@ -4,33 +4,31 @@ import { defineComponent, computed } from 'vue';
 import { useGameStore } from '@/stores/gameStore';
 
 export default defineComponent({
-  props: {
-    visible: Boolean
-  },
   setup() {
     const gameStore = useGameStore();
 
     const gameStatus = computed(() => gameStore.gameStatus);
     const message = computed(() => `You finished the game with ${gameStore.lives} lives remaining.`);
+    const isModalVisible = computed(() => gameStore.isModalVisible); // Computed to track modal visibility
 
     function closeModal() {
-      gameStore.resetGame();
+      gameStore.closeModal(); // Call closeModal action that just hides the modal
     }
 
-    return { gameStatus, message, closeModal };
+    return { gameStatus, message, closeModal, isModalVisible };
   }
 });
 </script>
 
-    <template>
-    <div v-if="visible" class="game-over-modal">
-      <div class="modal-content">
-        <h1>{{ gameStatus === 'won' ? 'Congratulations, You Won!' : 'Game Over' }}</h1>
-        <p>{{ message }}</p>
-        <button class="close-button" @click="closeModal">Close</button>
-      </div>
+<template>
+  <div v-if="isModalVisible" class="game-over-modal">
+    <div class="modal-content">
+      <h1>{{ gameStatus === 'won' ? 'Congratulations, You Won!' : 'Game Over' }}</h1>
+      <p>{{ message }}</p>
+      <button class="close-button" @click="closeModal">Close</button>
     </div>
-  </template>  
+  </div>
+</template>
  
 <style scoped>
 .game-over-modal {

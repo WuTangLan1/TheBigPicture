@@ -42,7 +42,7 @@ export default defineComponent({
   text-align: center;
   border-radius: 10px;
   box-shadow: 0 2px 15px rgba(0,0,0,0.1);
-  width: calc(100% - 70px);
+  width: calc(100% - 50px);
   max-width: 460px;
   margin-left: auto;
   margin-right: auto;
@@ -66,13 +66,12 @@ export default defineComponent({
 .current-tile {
   font-weight: bold;
   color: #333;
-  font-size: 18px; /* Default font size for larger screens */
+  font-size: 18px; 
 }
 
-/* Responsive font size for smaller screens */
 @media (max-width: 600px) {
   .current-tile {
-    font-size: 14px; /* Smaller font size for smaller screens */
+    font-size: 14px; 
   }
 }
 
