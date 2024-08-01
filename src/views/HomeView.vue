@@ -1,14 +1,16 @@
 <!-- src\views\HomeView.vue -->
 <script lang="ts">
 import GameContainer from '@/components/game/GameContainer.vue';
-import GameOverModal from '@/components/game/GameOverModal.vue'; 
+import GameOverModal from '@/components/game/GameOverModal.vue';
+import ExplanationContainer from '@/components/help/ExplanationContainer.vue'; 
 import { useGameStore } from '@/stores/gameStore';
 import {computed, onMounted} from 'vue'
 
 export default {
   components: {
     GameContainer,
-    GameOverModal
+    GameOverModal,
+    ExplanationContainer
   },
   setup() {
     const gameStore = useGameStore();
@@ -30,6 +32,7 @@ export default {
 
 <template>
   <div class="home-page">
+    <ExplanationContainer />
     <GameContainer /> 
     <GameOverModal :visible="isGameOver" />
   </div>
@@ -38,10 +41,13 @@ export default {
 <style scoped>
 .home-view {
   display: flex;
-  margin:auto 0;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  align-items: center; /* Center align the items horizontally */
+  justify-content: center; /* Adjust the distribution of children along the column */
+  width: 100%;
+  min-height: 100vh; /* Make sure it takes at least the full height of the viewport */
+  padding: 20px;
+  box-sizing: border-box;
 }
 
 .welcome-section {
