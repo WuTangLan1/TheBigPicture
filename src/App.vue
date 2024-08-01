@@ -3,14 +3,24 @@
 <script lang="ts">
 import Navbar from './components/navbar/navbar.vue';
 import AppFooter from './components/footer/AppFooter.vue';
-
-
+import PrivacyModal from './components/help/PrivacyModal.vue'; 
+import { ref } from 'vue';
 
 export default {
   name: 'App',
   components: {
     Navbar,
-    AppFooter
+    AppFooter,
+    PrivacyModal
+  },
+  setup() {
+    const showPrivacyModal = ref(false); 
+
+    function togglePrivacyModal() {
+      showPrivacyModal.value = !showPrivacyModal.value;
+    }
+
+    return { showPrivacyModal, togglePrivacyModal };
   }
 }
 </script>
@@ -21,7 +31,8 @@ export default {
     <div class="content">
       <router-view/>
     </div>
-    <AppFooter/>
+    <PrivacyModal v-if="showPrivacyModal" @close="togglePrivacyModal"/> 
+    <AppFooter :onPrivacyClick="togglePrivacyModal"/>
   </div>
 </template>
 
@@ -36,7 +47,7 @@ export default {
   text-align: center;
   background-color: #f3f4f6;
   color: #2c3e50;
-  min-height: 100vh; /* Ensure full vertical height */
+  min-height: 100vh; 
 }
 
 @media(min-width: 600px) {

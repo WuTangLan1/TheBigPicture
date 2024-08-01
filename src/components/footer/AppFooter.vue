@@ -1,21 +1,30 @@
 <!-- src\components\footer\AppFooter.vue -->
+<script lang="ts">
+import { defineComponent, PropType } from 'vue';
+
+export default defineComponent({
+  props: {
+    onPrivacyClick: Function as PropType<() => void> 
+  },
+  setup(props) {
+    return { ...props };
+  }
+});
+</script>
+
 <template>
-    <footer class="footer">
-      <div class="footer-content">
-        <div>
-          © 2024 Full Circle Games. All rights reserved.
-        </div>
-        <div class="footer-links">
-          <router-link to="/privacy">Privacy Policy</router-link>
-          <router-link to="/terms">Terms of Service</router-link>
-        </div>
-        <div>
-          Contact us: <a href="mailto:contact@fullcirclegames.com">contact@fullcirclegames.com</a>
-        </div>
+  <footer class="footer">
+    <div class="footer-content">
+      <div>© 2024 Full Circle Games. All rights reserved.</div>
+      <div class="footer-links">
+        <p to="/privacy" @click.prevent="onPrivacyClick">Privacy Policy</p> 
+        <p>Terms of Service</p>
       </div>
-    </footer>
-  </template>
-  
+      <div>Contact us: <a href="mailto:contact@fullcirclegames.com">contact@fullcirclegames.com</a></div>
+    </div>
+  </footer>
+</template>
+
   <style scoped>
   .footer {
     background-color: #2c3e50;

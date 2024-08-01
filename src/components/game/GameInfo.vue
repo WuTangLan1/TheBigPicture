@@ -29,7 +29,9 @@ export default defineComponent({
           <font-awesome-icon icon="heart" />
         </span>
       </div>
-      <button @click="showHelp">Help</button>
+      <button @click="showHelp" class="help-button">
+        <font-awesome-icon icon="info-circle" />
+      </button>
     </div>
   </div>
 </template>
@@ -85,23 +87,31 @@ export default defineComponent({
   font-size: 22px;
 }
 
-button {
+.help-button {
   background-color: #4CAF50;
   color: white;
   border: none;
-  padding: 10px 10px;
+  border-radius: 0.3rem;
+  padding: 10px;
   text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px; 
   cursor: pointer;
-  border-radius: 8px;
+  width: 30px; 
+  height: 30px; 
   box-shadow: 0 2px 5px rgba(0,0,0,0.2);
 }
 
-button:hover {
+.help-button:hover {
   background-color: #45a049;
   box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+
+.dark .help-button {
+  background-color: #333842; 
+  color: #f9fafb; 
 }
 
 .dark .status-panel {
