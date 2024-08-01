@@ -65,9 +65,9 @@ export default defineComponent({
   } 
 
   .dark .game-tile {
-    background-color: #787c79; 
+    background-color: #d6d6d6; 
     border-color: #666; 
-    color: #ddd;
+    color: #000000;
     box-shadow: 0 2px 4px rgba(255,255,255,0.1);
     }
     
