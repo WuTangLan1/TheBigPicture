@@ -110,14 +110,14 @@ export default defineComponent({
     cursor: not-allowed;
   }
 
-  .game-tile:hover:not(.non-interactive) {
-      background-color: #afc4ee;
-      box-shadow: 0 2px 4px rgba(17, 14, 59, 0.651);
-      transform: translateY(-3px);
-      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  .correct-tile {
+    background-color: green; 
+    color: white;
+    cursor: default; 
+    pointer-events: none; 
   }
 
-  .correct-tile {
+  .dark .correct-tile {
     background-color: green; 
     color: white;
     cursor: default; 
