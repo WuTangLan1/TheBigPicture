@@ -1,12 +1,16 @@
 <!-- src\App.vue -->
 
 <script lang="ts">
-import Navbar from './components/navbar/navbar.vue'
+import Navbar from './components/navbar/navbar.vue';
+import AppFooter from './components/footer/AppFooter.vue';
+
+
 
 export default {
   name: 'App',
   components: {
-    Navbar
+    Navbar,
+    AppFooter
   }
 }
 </script>
@@ -17,6 +21,7 @@ export default {
     <div class="content">
       <router-view/>
     </div>
+    <AppFooter/>
   </div>
 </template>
 
@@ -30,19 +35,19 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   background-color: #f3f4f6;
-  color: #2c3e50; 
+  color: #2c3e50;
+  min-height: 100vh; /* Ensure full vertical height */
 }
 
-@media(min-width: 600px)
-{
+@media(min-width: 600px) {
   #app {
     height: 100vh;
   }
 }
 
 .dark #app {
-  background-color: #111827; 
-  color: #f9fafb; 
+  background-color: #111827;
+  color: #f9fafb;
 }
 
 .content {
@@ -52,6 +57,7 @@ export default {
   justify-content: center;
   align-items: center;
   width: 100%;
+  padding: 20px 0;
 }
 
 .navbar {
@@ -68,7 +74,7 @@ nav a.router-link-exact-active {
 }
 
 .dark nav a {
-  color: #cbd5e1; 
+  color: #cbd5e1;
 }
 
 .dark nav a.router-link-exact-active {
