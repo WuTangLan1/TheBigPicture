@@ -62,12 +62,10 @@ export default defineComponent({
       }
     };
 
-    return { selectTile, isStartingTile, isEndingTile, isInteractive, backgroundColor, isCorrect, isIncorrect };
+    return { selectTile, isStartingTile, isEndingTile, isInteractive, backgroundColor, isCorrect, isIncorrect, gameStore };
   }
 });
 </script>
-
-
 
 <template>
   <div :class="['game-tile', 
@@ -79,10 +77,15 @@ export default defineComponent({
                 }]" 
        @click="selectTile"
        :style="{ backgroundColor: backgroundColor }">
-    {{ term || 'Empty term' }}
+    <!-- Conditionally display the spinner or the term -->
+    <div v-if="gameStore.isLoading">
+      <font-awesome-icon icon="spinner" spin />
+    </div>
+    <div v-else>
+      {{ term || 'Empty term' }}
+    </div>
   </div>
 </template>
-
 
 <style scoped>
 .game-tile {

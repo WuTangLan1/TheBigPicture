@@ -14,9 +14,11 @@ export const useGameStore = defineStore('gameStore', {
     lives: 3,
     gameStatus: 'playing',
     isModalVisible: false,
+    isLoading: false,
   }),
   actions: {
     async fetchTodayGame() {
+      this.isLoading = true; 
       const localDate = new Date();
       const today = `${localDate.getFullYear()}-${String(localDate.getMonth() + 1).padStart(2, '0')}-${String(localDate.getDate()).padStart(2, '0')}`;
       const gamesCollection = collection(db, 'games');
@@ -39,6 +41,7 @@ export const useGameStore = defineStore('gameStore', {
         this.interactiveTiles = [];
         this.tileStatus = {};
       }
+      this.isLoading = false;
     },
     selectTile(tile: string) {
       if (!this.interactiveTiles.includes(tile)) return;
