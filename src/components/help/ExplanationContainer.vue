@@ -79,6 +79,7 @@ ol {
   list-style: none;
   counter-reset: list-counter;
   padding: 0;
+  margin-left: 0;
 }
 
 li {
@@ -86,6 +87,8 @@ li {
   font-size: 16px;
   counter-increment: list-counter;
   position: relative;
+  padding-left: 35px; 
+  text-align: left;
 }
 
 .dark li {
@@ -95,19 +98,20 @@ li {
 li::before {
   content: counter(list-counter);
   background: #afc4ee;
-  color: white;
+  color: black;
   font-weight: bold;
   width: 25px;
   height: 25px;
-  border-radius: 50%;
-  display: inline-block;
-  text-align: center;
-  line-height: 25px;
-  margin-right: 10px;
+  border-radius: 0.3rem; 
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  left: 0; 
+  top: 0; 
 }
 
 .minimized {
   max-height: 80px; 
 }
 </style>
-
