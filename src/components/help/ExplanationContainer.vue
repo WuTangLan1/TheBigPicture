@@ -37,12 +37,12 @@ export default defineComponent({
 .explanation-container {
   position: relative;
   background-color: #e0e7f3;
-  padding: 20px;
+  padding: 10px;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0,0,0,0.1);
   margin: 0 auto 20px;
   text-align: center;
-  width: calc(100% - 70px);
+  width: calc(100% - 50px);
   max-width: 560px;
   overflow: hidden; 
   transition: max-height 0.5s ease-out;

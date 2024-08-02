@@ -44,9 +44,8 @@ export default {
   flex-direction: column;
   align-items: center; 
   justify-content: center; 
-  padding: 20px;
+  padding: 10px;
   box-sizing: border-box;
-  margin-bottom: 50px;
   gap: 20px; 
 }
 

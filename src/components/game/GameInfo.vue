@@ -38,13 +38,13 @@ export default defineComponent({
 
 <style scoped>
 .status-panel {
-  margin-top: 20px;
-  padding: 20px;
+  margin-top: 10px;
+  padding: 10px;
   background-color: #f9f9f9;
   text-align: center;
   border-radius: 10px;
   box-shadow: 0 2px 15px rgba(0,0,0,0.1);
-  width: calc(100% - 50px);
+  width: calc(100% - 20px);
   max-width: 460px;
   margin-left: auto;
   margin-right: auto;
