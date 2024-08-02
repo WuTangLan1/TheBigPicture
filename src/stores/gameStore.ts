@@ -1,8 +1,9 @@
 // src/stores/gameStore.ts
 import { defineStore } from 'pinia';
-import { db } from '@/firebase/fbConfig';
-import { collection, query, where, getDocs } from 'firebase/firestore';
+import { db, auth } from '@/firebase/fbConfig';
+import { collection, query, where, getDocs, setDoc, doc } from 'firebase/firestore';
 import shuffleArray from '@/utils/shuffleArray';
+import { v4 as uuidv4 } from 'uuid';
 
 export const useGameStore = defineStore('gameStore', {
   state: () => ({
@@ -66,8 +67,30 @@ export const useGameStore = defineStore('gameStore', {
         if (this.lives === 0) {
           this.gameStatus = 'lost';
           this.isModalVisible = true;
-          console.log('Game Over. You have run out of lives.');
+          this.savePerformance('won', this.selectedTiles.length); 
         }
+      }
+    },
+    async savePerformance(result: string, score: number): Promise<void> {
+      if (auth.currentUser) {
+        const uid = auth.currentUser.uid;
+        const docId = `${uid}_${uuidv4()}`;
+    
+        const performanceRef = doc(db, 'performances', docId);
+    
+        try {
+          await setDoc(performanceRef, {
+            uuid: uid,
+            gameDate: new Date().toISOString(),
+            result: result,
+            score: score
+          });
+          console.log("Performance saved successfully.");
+        } catch (error) {
+          console.error("Failed to save performance:", error);
+        }
+      } else {
+        console.error("No authenticated user found.");
       }
     },
     closeModal() {
