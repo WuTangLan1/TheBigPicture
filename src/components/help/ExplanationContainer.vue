@@ -16,7 +16,7 @@ export default defineComponent({
 </script>
 
 <template>
-  <div class="explanation-container">
+  <div :class="['explanation-container', { minimized: minimized }]" >
     <button @click="toggle" class="toggle-button">
       <font-awesome-icon :icon="minimized ? 'window-maximize' : 'window-minimize'" />
     </button>
@@ -32,6 +32,7 @@ export default defineComponent({
   </div>
 </template>
 
+
 <style scoped>
 .explanation-container {
   position: relative;
@@ -43,6 +44,9 @@ export default defineComponent({
   text-align: center;
   width: calc(100% - 70px);
   max-width: 560px;
+  overflow: hidden; 
+  transition: max-height 0.5s ease-out;
+  max-height: 1000px; 
 }
 
 .dark .explanation-container {
@@ -72,7 +76,7 @@ h2 {
 }
 
 ol {
-  list-style: none; 
+  list-style: none;
   counter-reset: list-counter;
   padding: 0;
 }
@@ -80,8 +84,8 @@ ol {
 li {
   color: #333;
   font-size: 16px;
-  counter-increment: list-counter; 
-  position: relative; 
+  counter-increment: list-counter;
+  position: relative;
 }
 
 .dark li {
@@ -89,16 +93,21 @@ li {
 }
 
 li::before {
-  content: counter(list-counter); 
-  background: #afc4ee; 
-  color: white; 
-  font-weight: bold; 
+  content: counter(list-counter);
+  background: #afc4ee;
+  color: white;
+  font-weight: bold;
   width: 25px;
-  height: 25px; 
-  border-radius: 50%; 
+  height: 25px;
+  border-radius: 50%;
   display: inline-block;
   text-align: center;
-  line-height: 25px; 
-  margin-right: 10px; 
+  line-height: 25px;
+  margin-right: 10px;
+}
+
+.minimized {
+  max-height: 80px; 
 }
 </style>
+
