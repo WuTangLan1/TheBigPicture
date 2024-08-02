@@ -13,13 +13,13 @@ export default defineComponent({
   },
   setup() {
     const gameStore = useGameStore();
-    const radius = ref(160);  // Initial default radius
+    const radius = ref(160);  
 
     const adjustRadius = () => {
       const container = document.querySelector('.tiles');
       if (container) {
         const size = Math.min(container.clientWidth, container.clientHeight);
-        radius.value = size / 2 * 0.8;  // Use 80% of half the smallest dimension
+        radius.value = size / 2 * 0.8;  
       }
     };
 
@@ -72,6 +72,13 @@ export default defineComponent({
   justify-content: center;
   width: 100%;
   min-height: 450px;
+  background-color: #e0e7f3;
+  border-radius: 0.4rem;
+  padding-bottom: 10px;
+}
+
+.dark .game-container {
+  background-color: #111827;
 }
 
 .tiles {
@@ -114,9 +121,9 @@ export default defineComponent({
 
 @media (max-width: 440px) {
   .game-tile {
-    width: 40px; 
-    font-size: 10px;
-    height: 35px;
+    width: 48px; 
+    font-size: 10.5px;
+    height: 45px;
   }
 }
 
