@@ -110,7 +110,6 @@ export default defineComponent({
 }
 
 .dark .help-button {
-  background-color: #333842; 
   color: #f9fafb; 
 }
 

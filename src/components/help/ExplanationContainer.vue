@@ -1,21 +1,40 @@
 <!-- src\components\help\ExplanationContainer.vue -->
+<script lang="ts">
+import { defineComponent, ref } from 'vue';
+
+export default defineComponent({
+  setup() {
+    const minimized = ref(false);
+
+    function toggle() {
+      minimized.value = !minimized.value;
+    }
+
+    return { minimized, toggle };
+  }
+});
+</script>
 
 <template>
   <div class="explanation-container">
-    <h2>
-      Welcome to Full Circle
-    </h2>
-    <ol>
-      <li>Select the correct tile to follow the green tile until the blue one is reached.</li>
-      <li>Each correct selection will turn green.</li>
-      <li>Avoid incorrect choices to maintain your lives.</li>
-      <li>Correctly click the correct order of tiles to win the game.</li>
-    </ol>
+    <button @click="toggle" class="toggle-button">
+      <font-awesome-icon :icon="minimized ? 'window-maximize' : 'window-minimize'" />
+    </button>
+    <h2>Welcome to Full Circle</h2>
+    <div v-if="!minimized" class="content">
+      <ol>
+        <li>Select the correct tile to follow the green tile until the blue one is reached.</li>
+        <li>Each correct selection will turn green.</li>
+        <li>Avoid incorrect choices to maintain your lives.</li>
+        <li>Correctly click the correct order of tiles to win the game.</li>
+      </ol>
+    </div>
   </div>
 </template>
 
 <style scoped>
 .explanation-container {
+  position: relative;
   background-color: #e0e7f3;
   padding: 20px;
   border-radius: 8px;
@@ -27,14 +46,21 @@
 }
 
 .dark .explanation-container {
-  background-color: #2e4058;
-  color: #f9fafb;
+  background-color: #3c4c66;
+  color: white;
 }
 
-.logo {
-  max-height: 50px;
-  margin-bottom: 10px;
-  vertical-align: middle; 
+.toggle-button {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.dark .toggle-button {
+  color: white;
 }
 
 h2 {
@@ -58,6 +84,10 @@ li {
   position: relative; 
 }
 
+.dark li {
+  color: white;
+}
+
 li::before {
   content: counter(list-counter); 
   background: #afc4ee; 
@@ -70,18 +100,5 @@ li::before {
   text-align: center;
   line-height: 25px; 
   margin-right: 10px; 
-}
-
-.dark li::before {
-  background: #4CAF50; 
-}
-
-.dark p, .dark li {
-  color: #f9fafb;
-}
-
-ul, ol {
-  text-align: left;
-  margin-top: 10px;
 }
 </style>
