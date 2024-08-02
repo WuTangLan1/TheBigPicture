@@ -48,7 +48,10 @@ export default defineComponent({
 </script>
 
 <template>
-  <div class="game-container">
+    <div v-if="gameStore.completedToday">
+    <p>You have already completed today's game!</p>
+  </div>
+  <div v-else class="game-container">
     <div class="tiles">
       <GameTile
         v-for="(term, index) in gameStore.shuffledGame"
