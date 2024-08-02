@@ -1,6 +1,8 @@
+// src\router\index.ts
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
 import HomeView from '@/views/HomeView.vue'
 import AccountView from '@/views/AccountView.vue'
+import ProfileView from '@/views/ProfileView.vue'
 
 
 const routes: Array<RouteRecordRaw> = [
@@ -10,9 +12,14 @@ const routes: Array<RouteRecordRaw> = [
     component: HomeView
   },
   {
-    path: '/account',
+    path: '/authentication',
     name: 'account',
     component: AccountView
+  },
+  {
+    path: '/profile',
+    name: 'profile',
+    component: ProfileView
   },
 ]
 

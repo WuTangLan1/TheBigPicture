@@ -1,40 +1,62 @@
 <!-- src\components\navbar\navbar.vue -->
 
 <script lang="ts">
-import {inject, Ref, computed} from 'vue';
+import { defineComponent, inject, computed, Ref } from 'vue';
+import { useRouter } from 'vue-router';
+import { getAuth } from 'firebase/auth';
 import DarkModeToggle from './darkmode/DarkModeToggle.vue';
-export default {
+
+export default defineComponent({
   name: 'Nav-bar',
-  components : {
+  components: {
     DarkModeToggle
   },
   setup() {
+    const router = useRouter();
     const isDark = inject('isDark') as Ref<boolean>;
+    const auth = getAuth();
 
     const logoSrc = computed(() => {
       return isDark.value ? require('@/assets/logos/darklogo.png') : require('@/assets/logos/lightlogo.png');
     });
 
-      return { isDark, logoSrc}
+    const isAuthenticated = () => {
+      return !!auth.currentUser; 
+    };
+
+    const navigateHome = () => {
+      router.push('/');
+    };
+
+    const navigateAccount = () => {
+      const route = isAuthenticated() ? '/profile' : '/authentication';
+      router.push(route);
+    };
+
+    return {
+      isDark,
+      logoSrc,
+      navigateHome,
+      navigateAccount
+    }
   }
-}
+});
 </script>
 
 
 <template>
   <nav class="navbar">
     <div class="container">
-      <router-link to="/" class="navbar-logo">
+      <div @click="navigateHome" class="navbar-logo">
         <img :src="logoSrc" alt="Logo" class="logo">
-      </router-link>
-
+      </div>
       <div class="navbar-links">
-        <router-link to="/" class="navbar-icon" title="Home" active-class="active-icon">
+        <div @click="navigateHome" class="navbar-icon" title="Home">
           <img src="@/assets/images/navbar/base.png" alt="Home">
-        </router-link>
-        <router-link to="/account" class="navbar-icon" title="Account" active-class="active-icon">
+        </div>
+        <div @click="navigateAccount" class="navbar-icon" title="Account">
           <img src="@/assets/images/navbar/account.png" alt="Account">
-        </router-link>
+        </div>
         <dark-mode-toggle></dark-mode-toggle>
       </div>
     </div>
