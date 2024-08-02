@@ -49,10 +49,12 @@ export default defineComponent({
       } else if (isEndingTile.value) {
         return blue;
       } else if (isCorrect.value) {
-        const fraction = (props.index - 1) / (gameStore.shuffledGame.length - 2);
+        // Calculate the fraction based on the position of the term in the correct sequence
+        const correctIndex = gameStore.currentGame.indexOf(props.term);
+        const fraction = correctIndex / (gameStore.currentGame.length - 1);
         return blendColors(green, blue, fraction);
       }
-      return '#f1f0f5'; 
+      return '#f1f0f5'; // default background color
     });
 
     const selectTile = () => {
@@ -65,6 +67,7 @@ export default defineComponent({
   }
 });
 </script>
+
 
 
 <template>
@@ -116,7 +119,7 @@ export default defineComponent({
   
   .starting-tile {
     background-color: green; 
-    color: white;
+    color: rgb(0, 0, 0);
     cursor: default; 
     pointer-events: none; 
   }
@@ -130,7 +133,7 @@ export default defineComponent({
 
   .dark .starting-tile {
     background-color: green; 
-    color: white;
+    color: rgb(0, 0, 0);
     cursor: default; 
     pointer-events: none; 
   }
