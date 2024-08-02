@@ -4,7 +4,8 @@ import { defineComponent, PropType } from 'vue';
 
 export default defineComponent({
   props: {
-    onPrivacyClick: Function as PropType<() => void> 
+    onPrivacyClick: Function as PropType<() => void>,
+    onTosClick: Function as PropType<() => void> 
   },
   setup(props) {
     return { ...props };
@@ -18,7 +19,7 @@ export default defineComponent({
       <div>© 2024 Full Circle Games. All rights reserved.</div>
       <div class="footer-links">
         <p class="link" @click="onPrivacyClick">Privacy Policy</p> 
-        <p class="link">Terms of Service</p>
+        <p class="link" @click="onTosClick">Terms of Service</p> 
       </div>
       <div>Contact us: <a href="mailto:contact@fullcirclegames.com">contact@fullcirclegames.com</a></div>
     </div>
@@ -28,10 +29,15 @@ export default defineComponent({
 
 <style scoped>
 .footer {
-  background-color: #2c3e50;
-  color: #fff;
+  background-color: #afc4ee;
+  color: #000000;
   padding: 20px;
   text-align: center;
+}
+
+.dark .footer {
+  color: white;
+  background-color: #2c3e50;
 }
 
 .footer-content {
@@ -48,9 +54,13 @@ export default defineComponent({
 }
 
 .link {
-  color: #9dc8e2;
+  color: #063b5c;
   cursor: pointer;
   text-decoration: underline; 
+}
+
+.dark .link {
+  color: rgb(255, 255, 255);
 }
 
 .link:hover {

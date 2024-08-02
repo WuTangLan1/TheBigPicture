@@ -41,20 +41,19 @@ export default defineComponent({
     const isIncorrect = computed(() => gameStore.tileStatus[props.term].incorrect);
 
     const backgroundColor = computed(() => {
-      const green = "#00ff00"; // Hex for green
-      const blue = "#4046A0"; // Hex equivalent to rgb(64, 70, 160)
+      const green = "#00ff00"; 
+      const blue = "#4046A0"; 
 
       if (isStartingTile.value) {
         return green;
       } else if (isEndingTile.value) {
         return blue;
       } else if (isCorrect.value) {
-        // Calculate the fraction based on the position of the term in the correct sequence
         const correctIndex = gameStore.currentGame.indexOf(props.term);
         const fraction = correctIndex / (gameStore.currentGame.length - 1);
         return blendColors(green, blue, fraction);
       }
-      return '#f1f0f5'; // default background color
+      return '#f1f0f5'; 
     });
 
     const selectTile = () => {
@@ -96,14 +95,10 @@ export default defineComponent({
   font-family: 'Arial', sans-serif;
   box-shadow: 0 2px 4px rgba(0,0,0,0.05);
   transition: all 0.3s ease;
-  height: auto;
-  min-width: 120px;
-  max-width: 200px;
   margin: 0 auto;
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 100px;
   } 
 
   .dark .game-tile {
@@ -157,49 +152,6 @@ export default defineComponent({
     0%, 100% { background-color: #f1f0f5; }
     50% { background-color: red; }
   }
-
-  @media (max-width: 750px) {
-        .game-tile {
-        min-width: 120px; 
-        max-width: 200px; 
-        padding: 5px 15px; 
-        font-size: 14px; 
-        }
-    }
-    @media (max-width: 550px) {
-        .game-tile {
-        min-width: 100px; 
-        max-width: 180px; 
-        padding: 5px 15px; 
-        font-size: 14px; 
-        min-height:90px; 
-        }
-    }
-    @media (max-width: 475px) {
-        .game-tile {
-        min-width: 80px; 
-        max-width: 150px; 
-        padding: 5px 10px; 
-        min-height: 60px; 
-        font-size: 12px; 
-    }
-    @media (max-width: 380px) {
-        .game-tile {
-        min-width: 70px; 
-        max-width: 120px; 
-        padding: 5px 10px; 
-        font-size: 12px; 
-    }
-    }
-    @media (max-width: 340px) {
-        .game-tile {
-        min-width: 60px; 
-        max-width: 120px; 
-        padding: 5px 5px; 
-        font-size: 10px; 
-      }
-    }
-}
   
   </style>
   

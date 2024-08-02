@@ -4,6 +4,7 @@
 import Navbar from './components/navbar/navbar.vue';
 import AppFooter from './components/footer/AppFooter.vue';
 import PrivacyModal from './components/help/PrivacyModal.vue'; 
+import TosModal from './components/help/TosModal.vue';
 import { ref } from 'vue';
 
 export default {
@@ -11,16 +12,22 @@ export default {
   components: {
     Navbar,
     AppFooter,
-    PrivacyModal
+    PrivacyModal, 
+    TosModal
   },
   setup() {
     const showPrivacyModal = ref(false); 
+    const showTOSModal = ref(false);
 
     function togglePrivacyModal() {
       showPrivacyModal.value = !showPrivacyModal.value;
     }
 
-    return { showPrivacyModal, togglePrivacyModal };
+    function toggleTOSModal() {
+      showTOSModal.value = !showTOSModal.value;
+    }
+
+    return { showPrivacyModal, togglePrivacyModal, showTOSModal, toggleTOSModal };
   }
 }
 </script>
@@ -32,7 +39,8 @@ export default {
       <router-view/>
     </div>
     <PrivacyModal v-if="showPrivacyModal" @close="togglePrivacyModal"/> 
-    <AppFooter :onPrivacyClick="togglePrivacyModal"/>
+    <TosModal v-if="showTOSModal" @close="toggleTOSModal"/> 
+    <AppFooter :onPrivacyClick="togglePrivacyModal" :onTosClick="toggleTOSModal"/>
   </div>
 </template>
 

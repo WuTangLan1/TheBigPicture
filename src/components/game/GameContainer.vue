@@ -1,6 +1,7 @@
-<!-- src\components\game\GameContainer.vue -->
+<!-- GameContainer.vue -->
+
 <script lang="ts">
-import { defineComponent, computed, onMounted } from 'vue';
+import { defineComponent, onMounted, ref, watch, onUnmounted } from 'vue';
 import { useGameStore } from '@/stores/gameStore';
 import GameTile from './GameTile.vue';
 import GameInfo from './GameInfo.vue';
@@ -12,26 +13,54 @@ export default defineComponent({
   },
   setup() {
     const gameStore = useGameStore();
-    
+    const radius = ref(160);  // Initial default radius
+
+    const adjustRadius = () => {
+      const container = document.querySelector('.tiles');
+      if (container) {
+        const size = Math.min(container.clientWidth, container.clientHeight);
+        radius.value = size / 2 * 0.8;  // Use 80% of half the smallest dimension
+      }
+    };
+
+    const getTilePosition = (index: number, total: number) => {
+      const angle = (index / total) * 2 * Math.PI;
+      const x = Math.cos(angle) * radius.value;
+      const y = Math.sin(angle) * radius.value;
+      return `translate(${x}px, ${y}px)`;
+    };
+
     onMounted(() => {
-        gameStore.fetchTodayGame();
-    });
-    
-    const gameTerms = computed(() => {
-        return gameStore.currentGame;
+      gameStore.fetchTodayGame();
+      adjustRadius();
+      window.addEventListener('resize', adjustRadius);
     });
 
-    return { gameTerms, gameStore };
-    }
+    watch(() => gameStore.shuffledGame.length, adjustRadius);
+
+    onUnmounted(() => {
+      window.removeEventListener('resize', adjustRadius);
+    });
+
+    return { gameStore, getTilePosition, radius };
+  }
 });
 </script>
 
 <template>
   <div class="game-container">
     <div class="tiles">
-      <GameTile v-for="(term, index) in gameStore.shuffledGame" :key="index" :term="term" :index="index" />
+      <GameTile
+        v-for="(term, index) in gameStore.shuffledGame"
+        :key="index"
+        :term="term"
+        :index="index"
+        :style="{ transform: getTilePosition(index, gameStore.shuffledGame.length) }"
+      />
     </div>
-    <GameInfo />
+    <div class="game-info">
+      <GameInfo />
+    </div>
   </div>
 </template>
 
@@ -40,22 +69,67 @@ export default defineComponent({
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 20px; 
-  padding: 20px;
-  margin: auto; 
-  max-width: 960px; 
+  justify-content: center;
+  width: 100%;
+  min-height: 450px;
 }
 
 .tiles {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr); 
-  gap: 20px; 
-  justify-content: center; 
-  align-items: center; 
+  position: relative;
+  width: 100%; 
+  height: 100%; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden; 
 }
 
-.dark .game-container {
-  color: #fff; 
+.game-tile {
+  position: absolute;
+  width: 60px; 
+  height: 60px; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  transition: transform 0.3s ease;
+}
+
+@media (max-width: 600px) {
+  .game-tile {
+    width: 65px; 
+    height: 50px;
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 470px) {
+  .game-tile {
+    width: 45px; 
+    font-size: 11px;
+    height: 40px;
+  }
+}
+
+@media (max-width: 440px) {
+  .game-tile {
+    width: 40px; 
+    font-size: 10px;
+    height: 35px;
+  }
+}
+
+@media (max-width: 410px) {
+  .game-tile {
+    width: 35px; 
+    font-size: 10px;
+    height: 30px;
+  }
+}
+
+.game-info {
+  width: calc(100% - 50px);
+  text-align: center;
 }
 </style>
-

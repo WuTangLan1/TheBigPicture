@@ -21,7 +21,7 @@ export default defineComponent({
       <font-awesome-icon :icon="minimized ? 'window-maximize' : 'window-minimize'" />
     </button>
     <h2>Welcome to Full Circle</h2>
-    <div v-if="!minimized" class="content">
+    <div v-if="!minimized" >
       <ol>
         <li>Select the correct tile to follow the green tile until the blue one is reached.</li>
         <li>Each correct selection will turn green.</li>
@@ -43,6 +43,7 @@ export default defineComponent({
   margin: 0 auto 20px;
   text-align: center;
   width: calc(100% - 50px);
+  min-width: 82vw;
   max-width: 560px;
   overflow: hidden; 
   transition: max-height 0.5s ease-out;
@@ -89,6 +90,14 @@ li {
   position: relative;
   padding-left: 35px; 
   text-align: left;
+  margin-bottom: 15px;
+}
+
+@media(max-width : 450px)
+{
+  li {
+    font-size: 14px;
+  }
 }
 
 .dark li {
