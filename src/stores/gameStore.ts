@@ -142,8 +142,6 @@ export const useGameStore = defineStore('gameStore', {
         } catch (error) {
           console.error("Failed to save performance:", error);
         }
-      } else {
-        console.error("No authenticated user found.");
       }
     },    
     closeModal() {

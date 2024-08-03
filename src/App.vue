@@ -45,6 +45,19 @@ export default {
 </template>
 
 <style>
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+}
+
+body {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
 #app {
   display: flex;
   flex-direction: column;
@@ -55,6 +68,7 @@ export default {
   text-align: center;
   background-color: #f3f4f6;
   color: #2c3e50;
+  min-height: 100vh;
 }
 
 .dark #app {
