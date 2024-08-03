@@ -1,9 +1,9 @@
 <!-- src\views\HomeView.vue -->
-<!-- src\views\HomeView.vue -->
 <script lang="ts">
 import GameContainer from '@/components/game/GameContainer.vue';
 import GameOverModal from '@/components/game/GameOverModal.vue';
 import ExplanationContainer from '@/components/help/ExplanationContainer.vue'; 
+import TodayGameResult from '@/components/game/TodayGameResult.vue';
 import { useGameStore } from '@/stores/gameStore';
 import { computed, onMounted } from 'vue'
 
@@ -11,7 +11,8 @@ export default {
   components: {
     GameContainer,
     GameOverModal,
-    ExplanationContainer
+    ExplanationContainer,
+    TodayGameResult
   },
   setup() {
     const gameStore = useGameStore();
@@ -35,6 +36,7 @@ export default {
   <div class="home-view">
     <ExplanationContainer />
     <GameContainer />
+    <TodayGameResult/>
     <GameOverModal :visible="isGameOver" />
   </div>
 </template>

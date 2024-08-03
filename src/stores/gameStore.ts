@@ -5,9 +5,19 @@ import { collection, query, where, getDocs, setDoc, doc } from 'firebase/firesto
 import shuffleArray from '@/utils/shuffleArray';
 import { v4 as uuidv4 } from 'uuid';
 
+interface PerformanceDetail {
+  gameDate: string;
+  record: string;
+  result: string;
+  score: number;
+  uuid: string;
+}
+
 export const useGameStore = defineStore('gameStore', {
   state: () => ({
     currentGame: [] as string[],
+    completedToday: false,
+    todayPerformance: null as PerformanceDetail | null, 
     shuffledGame: [] as string[],
     interactiveTiles: [] as string[],
     selectedTiles: [] as string[],
@@ -16,53 +26,73 @@ export const useGameStore = defineStore('gameStore', {
     gameStatus: 'playing',
     isModalVisible: false,
     isLoading: false,
-    completedToday: false,
     guesses: [] as { tile: string, correct: boolean }[],
   }),
   actions: {
     async fetchTodayGame() {
-      this.isLoading = true; 
+      this.isLoading = true;
       const localDate = new Date();
       const today = `${localDate.getFullYear()}-${String(localDate.getMonth() + 1).padStart(2, '0')}-${String(localDate.getDate()).padStart(2, '0')}`;
       
-      if (auth.currentUser) {
-        const uid = auth.currentUser.uid;
-        const performanceQuery = query(collection(db, 'performances'), 
-          where("uuid", "==", uid), 
-          where("gameDate", ">=", `${today}T00:00:00.000Z`), 
-          where("gameDate", "<=", `${today}T23:59:59.999Z`)
-        );
-
-        const perfSnapshot = await getDocs(performanceQuery);
-        if (!perfSnapshot.empty) {
-          this.completedToday = true;
-          this.gameStatus = 'won'; 
-          this.isModalVisible = true;
-          return;
+      try {
+        await this.setupNewGame(); 
+  
+        if (auth.currentUser) {
+          const uid = auth.currentUser.uid;
+          const performanceQuery = query(collection(db, 'performances'),
+            where("uuid", "==", uid),
+            where("gameDate", ">=", `${today}T00:00:00.000Z`),
+            where("gameDate", "<=", `${today}T23:59:59.999Z`)
+          );
+  
+          const perfSnapshot = await getDocs(performanceQuery);
+          if (!perfSnapshot.empty) {
+            this.completedToday = true;
+            const data = perfSnapshot.docs[0].data();
+            this.todayPerformance = {
+              gameDate: data.gameDate,
+              record: data.record,
+              result: data.result,
+              score: data.score,
+              uuid: data.uuid
+            } as PerformanceDetail;
+          }
         }
+      } catch (error) {
+        console.error("Error fetching today's game data:", error);
+      } finally {
+        this.isLoading = false;
       }
-      
+    },   
+
+    async setupNewGame() {
+      const localDate = new Date();
+      const today = `${localDate.getFullYear()}-${String(localDate.getMonth() + 1).padStart(2, '0')}-${String(localDate.getDate()).padStart(2, '0')}`;
+
       const gamesCollection = collection(db, 'games');
       const q = query(gamesCollection, where("date", "==", today));
-      const gameSnapshot = await getDocs(q);
-      if (gameSnapshot.docs.length > 0) {
-        const gameData = gameSnapshot.docs[0].data();
-        const fullArray = [1, 2, 3, 4, 5, 6, 7, 8, 9].map(index => gameData[index.toString()] as string || '');
-        this.currentGame = fullArray;
-        const middleTiles = shuffleArray(fullArray.slice(1, -1));
-        this.shuffledGame = [fullArray[0], ...middleTiles, fullArray[8]];
-        this.interactiveTiles = middleTiles;
-        this.tileStatus = this.currentGame.reduce((acc, term) => {
-          acc[term] = { correct: false, incorrect: false };
-          return acc;
-        }, {} as Record<string, { correct: boolean, incorrect: boolean }>);
-      } else {
-        this.currentGame = [];
-        this.shuffledGame = [];
-        this.interactiveTiles = [];
-        this.tileStatus = {};
+
+      try {
+        const gameSnapshot = await getDocs(q);
+        if (gameSnapshot.docs.length > 0) {
+          const gameData = gameSnapshot.docs[0].data();
+          this.currentGame = [1, 2, 3, 4, 5, 6, 7, 8, 9].map(index => gameData[index.toString()] || '');
+          const middleTiles = shuffleArray(this.currentGame.slice(1, -1));
+          this.shuffledGame = [this.currentGame[0], ...middleTiles, this.currentGame[8]];
+          this.interactiveTiles = middleTiles;
+          this.tileStatus = this.currentGame.reduce((acc, term) => {
+            acc[term] = { correct: false, incorrect: false };
+            return acc;
+          }, {} as Record<string, { correct: boolean; incorrect: boolean }>);          
+        } else {
+          this.currentGame = [];
+          this.shuffledGame = [];
+          this.interactiveTiles = [];
+          this.tileStatus = {};
+        }
+      } catch (error) {
+        console.error("Error setting up new game:", error);
       }
-      this.isLoading = false;
     },
     selectTile(tile: string) {
       if (!this.interactiveTiles.includes(tile)) return;
