@@ -64,7 +64,6 @@ export const useAuthStore = defineStore('authStore', {
     },
     logout() {
       signOut(auth).then(() => {
-        console.log('Logged out successfully');
         this.user = null;
         this.performances = [];
       }).catch((error) => {

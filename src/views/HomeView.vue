@@ -35,7 +35,7 @@ export default {
 <template>
   <div class="home-view">
     <ExplanationContainer />
-    <GameContainer />
+    <GameContainer @show-help="$emit('show-help')" />
     <TodayGameResult/>
     <GameOverModal :visible="isGameOver" />
   </div>

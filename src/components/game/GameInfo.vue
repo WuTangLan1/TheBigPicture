@@ -3,15 +3,15 @@ import { defineComponent, computed } from 'vue';
 import { useGameStore } from '@/stores/gameStore';
 
 export default defineComponent({
-  setup() {
+  setup(props, { emit }) {
     const gameStore = useGameStore();
 
     const currentTile = computed(() => gameStore.selectedTiles.slice(-1)[0] || '');
     const lives = computed(() => Array(gameStore.lives).fill(0));
 
-    const showHelp = () => {
-      alert("Help information goes here.");
-    };
+    function showHelp() {
+      emit('show-help');
+    }
 
     return { currentTile, lives, showHelp };
   }

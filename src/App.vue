@@ -5,6 +5,7 @@ import Navbar from './components/navbar/navbar.vue';
 import AppFooter from './components/footer/AppFooter.vue';
 import PrivacyModal from './components/help/PrivacyModal.vue'; 
 import TosModal from './components/help/TosModal.vue';
+import HelpModal from './components/help/HelpModal.vue';
 import { ref } from 'vue';
 
 export default {
@@ -13,11 +14,13 @@ export default {
     Navbar,
     AppFooter,
     PrivacyModal, 
-    TosModal
+    TosModal,
+    HelpModal
   },
   setup() {
     const showPrivacyModal = ref(false); 
     const showTOSModal = ref(false);
+    const showHelpModal = ref(true);
 
     function togglePrivacyModal() {
       showPrivacyModal.value = !showPrivacyModal.value;
@@ -27,7 +30,11 @@ export default {
       showTOSModal.value = !showTOSModal.value;
     }
 
-    return { showPrivacyModal, togglePrivacyModal, showTOSModal, toggleTOSModal };
+    function handleShowHelp() {
+      showHelpModal.value = true;
+    }
+
+    return { showPrivacyModal, togglePrivacyModal, showTOSModal, toggleTOSModal, showHelpModal, handleShowHelp };
   }
 }
 </script>
@@ -36,8 +43,9 @@ export default {
   <div id="app">
     <Navbar/>
     <div class="content">
-      <router-view/>
+      <router-view @show-help="handleShowHelp"/>
     </div>
+    <HelpModal :visible="showHelpModal" @update:visible="showHelpModal = $event" />
     <PrivacyModal v-if="showPrivacyModal" @close="togglePrivacyModal"/> 
     <TosModal v-if="showTOSModal" @close="toggleTOSModal"/> 
     <AppFooter :onPrivacyClick="togglePrivacyModal" :onTosClick="toggleTOSModal"/>

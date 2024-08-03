@@ -63,7 +63,8 @@ export default defineComponent({
       />
     </div>
     <div class="game-info">
-      <GameInfo />
+      <GameInfo @show-help="$emit('show-help')" />
+
     </div>
   </div>
 </template>
@@ -108,6 +109,7 @@ export default defineComponent({
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0,0,0,0.2);
   transition: transform 0.3s ease;
+  margin: 10px;
 }
 
 @media (max-width: 600px) {
