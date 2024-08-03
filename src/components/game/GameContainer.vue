@@ -79,6 +79,7 @@ export default defineComponent({
   border-radius: 0.4rem;
   padding-bottom: 10px;
   background-color: white;
+  padding: 10px;
 }
 
 .dark .game-container {
@@ -89,8 +90,6 @@ export default defineComponent({
   position: relative;
   width: 98%; 
   height: 100%; 
-  padding-top: 16px;
-  padding-bottom: 14px;
   display: flex;
   justify-content: center;
   align-items: center;

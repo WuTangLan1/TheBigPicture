@@ -48,6 +48,7 @@ export default defineComponent({
   overflow: hidden; 
   transition: max-height 0.5s ease-out;
   max-height: 1000px; 
+  overflow-y: auto;
 }
 
 .dark .explanation-container {
