@@ -76,9 +76,9 @@ export default defineComponent({
   justify-content: center;
   width: 100%;
   min-height: 60vh;
-  background-color: #e0e7f3;
   border-radius: 0.4rem;
   padding-bottom: 10px;
+  background-color: white;
 }
 
 .dark .game-container {
@@ -102,9 +102,8 @@ export default defineComponent({
 .game-tile {
   position: absolute;
   width: 55px; 
-  height: 55px;  
+  height: 45px;  
   display: flex;
-  padding-top: 2px;
   justify-content: center;
   align-items: center;
   border-radius: 8px;
@@ -115,7 +114,7 @@ export default defineComponent({
 @media (max-width: 600px) {
   .game-tile {
     width: 60px; 
-    height: 48px;
+    height: 45px;
     font-size: 13px;
   }
 }
@@ -124,7 +123,7 @@ export default defineComponent({
   .game-tile {
     width: 55px; 
     font-size: 11px;
-    height: 49px;
+    height: 45px;
   }
 }
 
@@ -136,11 +135,12 @@ export default defineComponent({
   }
 }
 
+
 @media (max-width: 470px) {
   .game-tile {
     width: 50px; 
     font-size: 11px;
-    height: 47px;
+    height: 45px;
   }
 }
 
