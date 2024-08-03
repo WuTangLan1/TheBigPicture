@@ -1,3 +1,4 @@
+// src\firebase\fbConfig.d.ts
 import { Firestore } from 'firebase/firestore';
 import { Auth } from 'firebase/auth';
 import { FirebaseStorage } from 'firebase/storage';
