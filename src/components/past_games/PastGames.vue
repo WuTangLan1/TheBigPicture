@@ -13,11 +13,14 @@ export default defineComponent({
     isDark: Boolean
   },
   computed: {
-    parsedDetails() {
-      const rawEntries = this.game.record.split(/_(?=t_|f_)/);
-      return rawEntries.map(entry => {
-        const result = entry.charAt(0); 
-        const term = entry.substring(2); 
+    parsedDetails(): Array<{ term: string, correct: boolean }> {
+      if (!this.game || !this.game.record) {
+        return [];
+      }
+      const rawEntries: string[] = this.game.record.split(/_(?=t_|f_)/);
+      return rawEntries.map((entry: string) => {
+        const result: string = entry.charAt(0);
+        const term: string = entry.substring(2);
         return {
           term: term,
           correct: result === 't'
@@ -26,7 +29,7 @@ export default defineComponent({
     }
   },
   methods: {
-    formatDate(dateString: string) {
+    formatDate(dateString: string): string {
       const options: Intl.DateTimeFormatOptions = { year: 'numeric', month: 'long', day: 'numeric' };
       return new Intl.DateTimeFormat('default', options).format(new Date(dateString));
     }
@@ -35,18 +38,18 @@ export default defineComponent({
 </script>
 
 <template>
-    <div class="past-game-container" :class="{ 'dark': isDark }">
-      <h3>Game on {{ formatDate(game.gameDate) }}</h3>
-      <p>Result: {{ game.result }}</p>
-      <p>Score: {{ game.score }}</p>
-      <div class="details">
-        <span v-for="(item, index) in parsedDetails" :key="index"
-              :class="{'correct': item.correct, 'incorrect': !item.correct, 'dark-span': isDark}">
-          {{ item.term }}
-        </span>
-      </div>
+  <div class="past-game-container" :class="{ 'dark': isDark }">
+    <h3>Game on {{ formatDate(game.gameDate) }}</h3>
+    <p>Result: {{ game.result }}</p>
+    <p>Score: {{ game.score }}</p>
+    <div class="details">
+      <span v-for="(item, index) in parsedDetails" :key="index"
+            :class="{'correct': item.correct, 'incorrect': !item.correct, 'dark-span': isDark}">
+        {{ item.term }}
+      </span>
     </div>
-  </template>
+  </div>
+</template>
 
 <style scoped>
 .past-game-container {
