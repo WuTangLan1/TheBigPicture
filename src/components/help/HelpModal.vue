@@ -28,6 +28,8 @@ export default defineComponent({
   }
 });
 </script>
+
+
 <template>
   <div v-if="visible" class="help-modal-overlay">
     <div class="help-modal">
@@ -98,6 +100,7 @@ img {
 
 h2 {
   color: black;
+  font-size: 1.7em;
 }
 
 .close-button {

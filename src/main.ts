@@ -9,10 +9,10 @@ import './tailwind.css';
 import { useDark, useToggle } from '@vueuse/core';
 
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faSpinner, faCheckCircle, faTimesCircle, faHeart, faInfoCircle, faWindowMinimize, faWindowMaximize   } from '@fortawesome/free-solid-svg-icons';
+import { faSpinner, faCheckCircle, faTimesCircle, faTimes, faHeart, faInfoCircle, faWindowMinimize, faWindowMaximize   } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
-library.add(faSpinner, faCheckCircle, faTimesCircle, faHeart, faInfoCircle, faWindowMinimize, faWindowMaximize );
+library.add(faSpinner, faCheckCircle, faTimesCircle, faTimes, faHeart, faInfoCircle, faWindowMinimize, faWindowMaximize );
 
 const app = createApp(App);
 
