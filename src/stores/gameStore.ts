@@ -76,9 +76,9 @@ export const useGameStore = defineStore('gameStore', {
         const gameSnapshot = await getDocs(q);
         if (gameSnapshot.docs.length > 0) {
           const gameData = gameSnapshot.docs[0].data();
-          this.currentGame = [1, 2, 3, 4, 5, 6, 7, 8, 9].map(index => gameData[index.toString()] || '');
+          this.currentGame = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(index => gameData[index.toString()] || '');
           const middleTiles = shuffleArray(this.currentGame.slice(1, -1));
-          this.shuffledGame = [this.currentGame[0], ...middleTiles, this.currentGame[8]];
+          this.shuffledGame = [this.currentGame[0], ...middleTiles, this.currentGame[9]];
           this.interactiveTiles = middleTiles;
           this.tileStatus = this.currentGame.reduce((acc, term) => {
             acc[term] = { correct: false, incorrect: false };

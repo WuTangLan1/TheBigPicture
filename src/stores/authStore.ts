@@ -13,7 +13,6 @@ interface PerformanceData {
     uuid: string;
   }
   
-  // Make sure to export this interface
   export interface Performance extends PerformanceData {
     id: string;
   }

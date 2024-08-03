@@ -1,7 +1,7 @@
 <!-- GameContainer.vue -->
 
 <script lang="ts">
-import { defineComponent, onMounted, ref, watch, onUnmounted } from 'vue';
+import { defineComponent, ref, computed, onMounted, watch, onUnmounted } from 'vue';
 import { useGameStore } from '@/stores/gameStore';
 import GameTile from './GameTile.vue';
 import GameInfo from './GameInfo.vue';
@@ -13,18 +13,18 @@ export default defineComponent({
   },
   setup() {
     const gameStore = useGameStore();
-    const radius = ref(160);  
+    const containerSize = ref(0);
+    const radius = computed(() => containerSize.value / 2 - 30); 
 
     const adjustRadius = () => {
       const container = document.querySelector('.tiles');
       if (container) {
-        const size = Math.min(container.clientWidth, container.clientHeight);
-        radius.value = size / 2 * 0.8;  
+        containerSize.value = Math.min(container.clientWidth, container.clientHeight);
       }
     };
 
     const getTilePosition = (index: number, total: number) => {
-      const angle = (index / total) * 2 * Math.PI;
+      const angle = (index / total) * 2 * Math.PI - Math.PI / 2;
       const x = Math.cos(angle) * radius.value;
       const y = Math.sin(angle) * radius.value;
       return `translate(${x}px, ${y}px)`;
@@ -36,7 +36,7 @@ export default defineComponent({
       window.addEventListener('resize', adjustRadius);
     });
 
-    watch(() => gameStore.shuffledGame.length, adjustRadius);
+    watch(() => gameStore.shuffledGame.length, adjustRadius, { immediate: true });
 
     onUnmounted(() => {
       window.removeEventListener('resize', adjustRadius);
@@ -46,6 +46,7 @@ export default defineComponent({
   }
 });
 </script>
+
 
 <template>
     <div v-if="gameStore.completedToday">
@@ -92,12 +93,14 @@ export default defineComponent({
   justify-content: center;
   align-items: center;
   overflow: hidden; 
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 .game-tile {
   position: absolute;
   width: 60px; 
-  height: 60px; 
+  height: 60px;  
   display: flex;
   justify-content: center;
   align-items: center;
