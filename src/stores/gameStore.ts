@@ -109,7 +109,6 @@ export const useGameStore = defineStore('gameStore', {
         if (this.selectedTiles.length === this.interactiveTiles.length) {
           this.gameStatus = 'won';
           this.isModalVisible = true;
-          console.log('Congratulations! You won.');
           this.savePerformance('won', this.selectedTiles.length);
         }
       } else {
@@ -118,7 +117,6 @@ export const useGameStore = defineStore('gameStore', {
         setTimeout(() => {
           this.tileStatus[tile].incorrect = false;
         }, 1000);
-        console.log(`Incorrect! You chose ${tile}, but the correct tile was ${correctTile}`);
         if (this.lives === 0) {
           this.gameStatus = 'lost';
           this.isModalVisible = true;
@@ -127,13 +125,10 @@ export const useGameStore = defineStore('gameStore', {
       }
     },    
     async savePerformance(result: string, score: number): Promise<void> {
-      console.log('entering save performance');
       if (auth.currentUser) {
         const uid = auth.currentUser.uid;
         const docId = `${uid}_${uuidv4()}`;
         const performanceRef = doc(db, 'performances', docId);
-    
-        // Format the guesses into a string
         const guessRecord = this.guesses.map(g => `${g.correct ? 't' : 'f'}_${g.tile}`).join('_');
     
         try {
@@ -142,9 +137,8 @@ export const useGameStore = defineStore('gameStore', {
             gameDate: new Date().toISOString(),
             result: result,
             score: score,
-            record: guessRecord  // Save the formatted guesses string
+            record: guessRecord 
           });
-          console.log("Performance saved successfully.");
         } catch (error) {
           console.error("Failed to save performance:", error);
         }

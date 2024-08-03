@@ -50,8 +50,8 @@ export default defineComponent({
   margin-top: 20px;
   border-radius: 8px;
   background-color: #e5e6f3;
-  width: calc(100% - 70px);
-  min-width: 82vw;
+  width: calc(100% - 100px);
+  min-width: 80vw;
   max-width: 560px;
 }
 
