@@ -50,8 +50,8 @@ export default {
   padding: 10px 0 0 0; 
   margin-top: 0; 
   box-sizing: border-box;
-  height: 100vh;
   width: 100%;
+  height: 90vh;
   overflow: hidden; 
 }
 

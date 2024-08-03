@@ -1,9 +1,11 @@
 // src/stores/authStore.ts
+import { defineStore } from 'pinia';
+import { signOut, onAuthStateChanged } from 'firebase/auth';
+import { auth, db } from '@/firebase/fbConfig';
 import { User } from 'firebase/auth';
 import { collection, query, where, getDocs } from 'firebase/firestore';
-import { defineStore } from 'pinia';
-import { auth, db } from '@/firebase/fbConfig';
-import { onAuthStateChanged } from 'firebase/auth';
+
+const INACTIVITY_TIME_LIMIT = 30 * 60 * 1000;
 
 interface PerformanceData {
     gameDate: string;
@@ -22,6 +24,8 @@ export const useAuthStore = defineStore('authStore', {
     user: null as User | null,
     performances: [] as Performance[],
     isLoading: false,
+    lastActivityTime: Date.now(),
+    activityTimeout: null as ReturnType<typeof setTimeout> | null,
   }),
 
   actions: {
@@ -29,11 +33,42 @@ export const useAuthStore = defineStore('authStore', {
       onAuthStateChanged(auth, (user) => {
         if (user) {
           this.user = user;
-          this.fetchPerformances(); 
+          this.fetchPerformances();
+          this.resetActivityTimer();
         } else {
           this.user = null;
-          this.performances = []; 
+          this.performances = [];
+          this.clearActivityTimer();
         }
+      });
+    },
+    resetActivityTimer() {
+      this.clearActivityTimer();
+      this.activityTimeout = setTimeout(() => this.logout(), INACTIVITY_TIME_LIMIT);
+      document.addEventListener('mousemove', this.resetActivityTimer);
+      document.addEventListener('keydown', this.resetActivityTimer);
+    },
+    clearActivityTimer() {
+      if (this.activityTimeout) {
+        clearTimeout(this.activityTimeout);
+      }
+      document.removeEventListener('mousemove', this.resetActivityTimer);
+      document.removeEventListener('keydown', this.resetActivityTimer);
+    },
+    handleInactivity() {
+      signOut(auth).then(() => {
+        alert('You have been logged out due to inactivity.');
+      });
+      document.removeEventListener('mousemove', this.resetActivityTimer);
+      document.removeEventListener('keydown', this.resetActivityTimer);
+    },
+    logout() {
+      signOut(auth).then(() => {
+        console.log('Logged out successfully');
+        this.user = null;
+        this.performances = [];
+      }).catch((error) => {
+        console.error('Logout failed', error);
       });
     },
     async fetchPerformances() {
@@ -46,7 +81,7 @@ export const useAuthStore = defineStore('authStore', {
         const snapshot = await getDocs(q);
         this.performances = snapshot.docs.map(doc => {
           const data = doc.data() as PerformanceData;
-          return { id: doc.id, ...data };  // Explicitly separate 'id' and the rest of the data
+          return { id: doc.id, ...data };  
         });
       } catch (error) {
         console.error("Error fetching performances:", error);

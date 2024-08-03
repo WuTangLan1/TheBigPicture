@@ -75,7 +75,7 @@ export default defineComponent({
   align-items: center;
   justify-content: center;
   width: 100%;
-  min-height: 450px;
+  min-height: 60vh;
   background-color: #e0e7f3;
   border-radius: 0.4rem;
   padding-bottom: 10px;
@@ -87,8 +87,10 @@ export default defineComponent({
 
 .tiles {
   position: relative;
-  width: 100%; 
+  width: 98%; 
   height: 100%; 
+  padding-top: 16px;
+  padding-bottom: 14px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -99,9 +101,10 @@ export default defineComponent({
 
 .game-tile {
   position: absolute;
-  width: 60px; 
-  height: 60px;  
+  width: 55px; 
+  height: 55px;  
   display: flex;
+  padding-top: 2px;
   justify-content: center;
   align-items: center;
   border-radius: 8px;
@@ -111,17 +114,33 @@ export default defineComponent({
 
 @media (max-width: 600px) {
   .game-tile {
-    width: 65px; 
-    height: 50px;
+    width: 60px; 
+    height: 48px;
     font-size: 13px;
+  }
+}
+
+@media (max-width: 570px) {
+  .game-tile {
+    width: 55px; 
+    font-size: 11px;
+    height: 49px;
+  }
+}
+
+@media (max-width: 520px) {
+  .game-tile {
+    width: 52px; 
+    font-size: 11px;
+    height: 49px;
   }
 }
 
 @media (max-width: 470px) {
   .game-tile {
-    width: 45px; 
+    width: 50px; 
     font-size: 11px;
-    height: 40px;
+    height: 47px;
   }
 }
 

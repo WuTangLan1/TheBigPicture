@@ -1,17 +1,5 @@
 <!-- src\views\ProfileView.vue -->
 
-<template>
-  <div class="profile-page" :class="{ 'dark': isDark }">
-    <h1>Profile Page</h1>
-    <p>Welcome, {{ user?.email || 'Guest' }}</p>
-    <button @click="logout">Logout</button>
-    <div class="past-games">
-      <h2>Past Games</h2>
-      <PastGames v-for="game in performances" :key="game.id" :game="game" :is-dark="isDark" />
-    </div>
-  </div>
-</template>
-
 <script lang="ts">
 import { defineComponent, inject, Ref } from 'vue';
 import { useRouter } from 'vue-router';
@@ -37,6 +25,7 @@ export default defineComponent({
     };
 
     return {
+      authStore,
       user: authStore.user,
       performances: authStore.performances,
       isDark: isDarkValue,
@@ -46,6 +35,18 @@ export default defineComponent({
 });
 </script>
 
+<template>
+  <div class="profile-page" :class="{ 'dark': isDark }">
+    <h1>Profile Page</h1>
+    <p>Welcome, {{ user?.email || 'Guest' }}</p>
+    <button @click="logout" :disabled="authStore.isLoading">Logout</button>
+    <div v-if="authStore.isLoading">Loading...</div>
+    <div class="past-games">
+      <h2>Past Games</h2>
+      <PastGames v-for="game in performances" :key="game.id" :game="game" :is-dark="isDark" />
+    </div>
+  </div>
+</template>
 
 <style scoped>
 .profile-page {
