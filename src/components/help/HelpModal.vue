@@ -61,7 +61,7 @@ export default defineComponent({
           <div class="tile incorrect-tile">Pastry Chef</div>
         </div>
       </div>
-      <button @click="close" class="close-button">Close</button>
+      <button @click="close" class="close-button">Perfecto</button>
     </div>
   </div>
 </template>
@@ -81,7 +81,7 @@ export default defineComponent({
 
 .help-modal {
   padding: 20px;
-  padding-bottom: 50px; 
+  padding-bottom: 20px; 
   width: 90%; 
   max-width: 600px;
   background-color: #FFF;
@@ -168,7 +168,7 @@ h2 {
   right: 20px;
   bottom: 20px;
   padding: 10px 20px;
-  background-color: rgb(194, 158, 40);
+  background-color: rgb(40, 116, 37);
   color: white;
   border-radius: 5px;
   cursor: pointer;
