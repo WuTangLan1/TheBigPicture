@@ -88,6 +88,7 @@ export default defineComponent({
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
   position: relative; 
   overflow: auto; 
+  overflow-y:auto;
   border-radius: 0.3rem;
 }
 
@@ -183,13 +184,28 @@ h2 {
   }
 
   .help-modal {
-    width: 100%; 
-    max-width: none; 
-    padding-bottom: 3vh; 
-    overflow-y: auto; 
-    animation: slideIn 0.3s ease-out forwards; 
-    border-radius: 0;
+    position: relative;
+    max-height: 68vh;
+    overflow-y: auto;
+    padding-bottom: 60px;  /* Ensure there's enough padding at the bottom for the button */
   }
+
+  .close-button {
+    display: block;            /* Use block to allow margin auto to work */
+    width: auto;               /* Auto width for the content */
+    margin: 20px auto 0;       /* Top margin for space, auto for horizontal centering */
+    padding: 10px 20px;
+    background-color: rgb(40, 116, 37);
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    text-align: right;         /* Align text to the right */
+    position: relative;        /* Ensure it follows the normal flow after the last section */
+    right: 0;                  /* Align the button to the right */
+    left: 0;                   /* Ensure full width context */
+  }
+
 
   h2 {
     font-size: 25px;
