@@ -90,6 +90,8 @@ export default defineComponent({
   overflow: auto; 
   overflow-y:auto;
   border-radius: 0.3rem;
+  transition: transform 0.5s ease-out;
+  will-change: transform; 
 }
 
 h2 {
@@ -187,23 +189,29 @@ h2 {
     position: relative;
     max-height: 68vh;
     overflow-y: auto;
-    padding-bottom: 60px;  /* Ensure there's enough padding at the bottom for the button */
+    padding-bottom: 60px;
+    transition: transform 0.5s ease-out;
+    will-change: transform; 
+    
   }
 
+  .help-modal-overlay.visible .help-modal {
+    transform: translate(-50%, -50%); 
+  }
   .close-button {
-    display: block;            /* Use block to allow margin auto to work */
-    width: auto;               /* Auto width for the content */
-    margin: 20px auto 0;       /* Top margin for space, auto for horizontal centering */
+    display: block;            
+    width: auto;               
+    margin: 20px auto 0;     
     padding: 10px 20px;
     background-color: rgb(40, 116, 37);
     color: white;
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s;
-    text-align: right;         /* Align text to the right */
-    position: relative;        /* Ensure it follows the normal flow after the last section */
-    right: 0;                  /* Align the button to the right */
-    left: 0;                   /* Ensure full width context */
+    text-align: right;        
+    position: relative;       
+    right: 0;                  
+    left: 0;                   
   }
 
 

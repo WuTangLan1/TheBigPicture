@@ -6,14 +6,14 @@ export default defineComponent({
   setup(props, { emit }) {
     const gameStore = useGameStore();
 
-    const currentTile = computed(() => gameStore.selectedTiles.slice(-1)[0] || '');
+    const difficulty = computed(() => gameStore.difficulty);
     const lives = computed(() => Array(gameStore.lives).fill(0));
 
     function showHelp() {
       emit('show-help');
     }
 
-    return { currentTile, lives, showHelp };
+    return { difficulty, lives, showHelp };
   }
 });
 </script>
@@ -21,8 +21,8 @@ export default defineComponent({
 <template>
   <div class="status-panel">
     <div class="info-section">
-      <div class="selected-tile-info">
-        <span class="current-tile">{{ currentTile || 'None Selected' }}</span>
+      <div class="difficulty-display">
+        Difficulty: {{ difficulty }}
       </div>
       <div class="lives-display">
         <span v-for="life in lives" :key="life" class="heart">
@@ -65,19 +65,19 @@ export default defineComponent({
   margin: 0 10px; 
 }
 
-.current-tile {
+.difficulty-display {
   font-weight: bold;
   color: #333;
   font-size: 18px; 
 }
 
 @media (max-width: 600px) {
-  .current-tile {
+  .difficulty-display {
     font-size: 14px; 
   }
 }
 
-.dark .current-tile {
+.dark .difficulty-display {
     color: white;
 }
 

@@ -27,6 +27,7 @@ export const useGameStore = defineStore('gameStore', {
     isModalVisible: false,
     isLoading: false,
     guesses: [] as { tile: string, correct: boolean }[],
+    difficulty: '',
   }),
   actions: {
     async fetchTodayGame() {
@@ -80,6 +81,7 @@ export const useGameStore = defineStore('gameStore', {
           const middleTiles = shuffleArray(this.currentGame.slice(1, -1));
           this.shuffledGame = [this.currentGame[0], ...middleTiles, this.currentGame[9]];
           this.interactiveTiles = middleTiles;
+          this.difficulty = gameData.difficulty;
           this.tileStatus = this.currentGame.reduce((acc, term) => {
             acc[term] = { correct: false, incorrect: false };
             return acc;
