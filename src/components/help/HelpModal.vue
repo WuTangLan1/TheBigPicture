@@ -185,7 +185,7 @@ h2 {
   .help-modal {
     width: 100%; 
     max-width: none; 
-    padding-bottom: 10vh; 
+    padding-bottom: 3vh; 
     overflow-y: auto; 
     animation: slideIn 0.3s ease-out forwards; 
     border-radius: 0;
