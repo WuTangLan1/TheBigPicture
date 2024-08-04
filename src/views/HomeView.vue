@@ -51,7 +51,7 @@ export default {
   margin-top: 0; 
   box-sizing: border-box;
   width: 100%;
-  height: 90vh;
+  height: 100vh;
   overflow: hidden; 
 }
 

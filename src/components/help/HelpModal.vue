@@ -1,43 +1,66 @@
 <!-- src\components\help\HelpModal.vue -->
 <script lang="ts">
-import { defineComponent, ref, watchEffect } from 'vue';
-import { useDark } from '@vueuse/core';
+import { defineComponent, reactive } from 'vue';
 
 export default defineComponent({
   props: {
     visible: Boolean
   },
-  emits: ['update:visible'], 
+  emits: ['update:visible'],
   setup(props, { emit }) {
-    const isDark = useDark();
-    const firstHelpImage = ref('');
-    const secondHelpImage = ref('');
+    const sections = reactive([
+      { title: 'Section 1', connections: [{ left: 'Mountain', right: 'Peak' }] },
+      { title: 'Section 2', connections: [{ left: 'Ocean', right: 'Wave' }] },
+      { title: 'Section 3', connections: [{ left: 'Forest', right: 'Tree' }] }
+    ]);
 
-    watchEffect(async () => {
-      const firstImage = !isDark.value ? 'first_dark.png' : 'first_light.png';
-      const secondImage = !isDark.value ? 'second_dark.png' : 'second_light.png';
-      firstHelpImage.value = (await import(`@/assets/images/help/${firstImage}`)).default;
-      secondHelpImage.value = (await import(`@/assets/images/help/${secondImage}`)).default;
-    });
+    function getColor(index: number, position: 'left' | 'right'): string {
+      const colors = ['#2C7D40', '#5E53B2', '#369F3A', '#316C72', '#27696D','#34618B'];
+      return colors[(index * 2 + (position === 'right' ? 1 : 0)) % colors.length];
+    }
+
+    function getDescription(index: number): string {
+      const descriptions = [
+        "Tiles can be directly or functionally associated",
+        "Tiles can be conceptually or categorically linked",
+        "Tiles can be linked through cause and effect"
+      ];
+      return descriptions[index];
+    }
 
     function close() {
       emit('update:visible', false);
     }
 
-    return { close, firstHelpImage, secondHelpImage };
+    return { close, sections, getColor, getDescription };
   }
 });
 </script>
-
 
 <template>
   <div v-if="visible" class="help-modal-overlay">
     <div class="help-modal">
       <h2>Help Information</h2>
-      <p>Here are some useful tips to get you started...</p>
-      <div class="help-images">
-        <img :src="firstHelpImage" alt="Help Image 1">
-        <img :src="secondHelpImage" alt="Help Image 2">
+      <div v-for="(section, index) in sections" :key="section.title" class="section">
+        <h3>{{ section.title }}</h3>
+        <p class="description">{{ getDescription(index) }}</p>
+        <div class="flex-container">
+          <div class="tile" :style="{ backgroundColor: getColor(index, 'left') }">
+            {{ section.connections[0].left }}
+          </div>
+          <font-awesome-icon icon="arrow-right" class="arrow-icon" />
+          <div class="tile" :style="{ backgroundColor: getColor(index, 'right') }">
+            {{ section.connections[0].right }}
+          </div>
+        </div>
+      </div>
+      <!-- New Final Section -->
+      <div class="final-section">
+        <h3>Incorrect Guess</h3>
+        <p class="description">The tile will flash red if the guess is incorrect, taking one of the three lives.</p>
+        <div class="flex-container single-tile-container">
+          <div class="tile incorrect-tile">Example Tile</div>
+        </div>
       </div>
       <button @click="close" class="close-button">Close</button>
     </div>
@@ -46,78 +69,88 @@ export default defineComponent({
 
 <style scoped>
 .help-modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.6);
   display: flex;
   justify-content: center;
   align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.6);
 }
 
 .help-modal {
-  background-color: var(--modal-background-color, #fff);
-  padding: 30px;
-  border-radius: 10px;
+  padding: 20px;
+  padding-bottom: 50px; 
+  width: 90%; 
+  max-width: 600px;
+  background-color: #FFF;
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
-  width: 90%;
-  position: relative;
-  overflow: hidden; 
+  position: relative; 
+  overflow: auto; 
 }
 
-@media (max-width: 800px) {
-  .help-modal-overlay {
-    align-items: flex-start;
-  }
-  .help-modal {
-    width: 80%;
-    height: 65%; 
-  }
+.section {
+  margin-top: 20px;
+  margin-bottom: 30px; 
+  text-align: center; 
 }
 
-.help-images {
+.flex-container {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 20px;
-  width: 100%;
+  justify-content: space-between; 
+  align-items: center; 
+  padding: 0 20px; 
+  max-width: 600px; 
+  margin: auto; 
 }
 
-@media (min-width: 800px) {
-  .help-images {
-    flex-direction: row;
-    justify-content: space-around;
-  }
+.description {
+  font-style: italic; 
+  color: #666; 
+  margin-bottom: 10px; 
 }
 
-img {
-  max-width: 100%;
-  border: 1px solid var(#ddd);
-  padding: 5px;
+.tile {
+color: white;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 10px;
+  min-width: 100px;
+  text-align: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
-h2 {
-  color: black;
-  font-size: 1.7em;
+.final-section {
+  text-align: center;
+  margin-top: 20px;
+  margin-bottom: 50px; 
+}
+
+.single-tile-container {
+  justify-content: center; 
+}
+
+.incorrect-tile {
+  animation: flash-red 2s infinite; 
+}
+
+@keyframes flash-red {
+  0%, 100% { background-color: #f1f0f5; }
+  50% { background-color: red; }
 }
 
 .close-button {
   position: absolute;
   right: 20px;
-  bottom: 10px;
+  bottom: 20px;
   padding: 10px 20px;
   background-color: rgb(194, 158, 40);
-  color: #fff;
-  margin-top: 10px;
-  border: none;
+  color: white;
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s;
 }
 
-.close-button:hover {
-  background-color: var( #45a049);
-}
 </style>
