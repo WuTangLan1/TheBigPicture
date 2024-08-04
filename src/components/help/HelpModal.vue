@@ -9,9 +9,9 @@ export default defineComponent({
   emits: ['update:visible'],
   setup(props, { emit }) {
     const sections = reactive([
-      { title: 'Section 1', connections: [{ left: 'Mountain', right: 'Peak' }] },
-      { title: 'Section 2', connections: [{ left: 'Ocean', right: 'Wave' }] },
-      { title: 'Section 3', connections: [{ left: 'Forest', right: 'Tree' }] }
+      { title: 'Some rules for the game...', connections: [{ left: 'Mountain', right: 'Peak' }] },
+      { title: 'Or', connections: [{ left: 'Ocean', right: 'Wave' }] },
+      { title: 'Or even', connections: [{ left: 'Forest', right: 'Tree' }] }
     ]);
 
     function getColor(index: number, position: 'left' | 'right'): string {
@@ -54,12 +54,11 @@ export default defineComponent({
           </div>
         </div>
       </div>
-      <!-- New Final Section -->
       <div class="final-section">
-        <h3>Incorrect Guess</h3>
+        <h3>with a incorrect guess showing</h3>
         <p class="description">The tile will flash red if the guess is incorrect, taking one of the three lives.</p>
         <div class="flex-container single-tile-container">
-          <div class="tile incorrect-tile">Example Tile</div>
+          <div class="tile incorrect-tile">Pastry Chef</div>
         </div>
       </div>
       <button @click="close" class="close-button">Close</button>
@@ -89,6 +88,11 @@ export default defineComponent({
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
   position: relative; 
   overflow: auto; 
+  border-radius: 0.3rem;
+}
+
+h2 {
+  font-size: 28px;
 }
 
 .section {
@@ -113,7 +117,7 @@ export default defineComponent({
 }
 
 .tile {
-color: white;
+  color: white;
   border: 1px solid #ccc;
   border-radius: 8px;
   padding: 10px;
@@ -141,6 +145,24 @@ color: white;
   50% { background-color: red; }
 }
 
+.dark .help-modal-overlay {
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+.dark .help-modal {
+  background-color: #333; 
+  color: #ccc; 
+}
+
+.dark .description, .dark h2, .dark h3 {
+  color: #ddd; 
+}
+
+.dark .tile {
+  color: white; 
+  background-color: var(--tile-bg-color, #f1f0f5); 
+}
+
 .close-button {
   position: absolute;
   right: 20px;
@@ -151,6 +173,45 @@ color: white;
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s;
+}
+
+@media (max-width: 600px) {
+  .help-modal-overlay {
+    justify-content: flex-start; 
+    align-items: flex-start; 
+    padding: 0;
+  }
+
+  .help-modal {
+    width: 100%; 
+    max-width: none; 
+    padding-bottom: 10vh; 
+    overflow-y: auto; 
+    animation: slideIn 0.3s ease-out forwards; 
+    border-radius: 0;
+  }
+
+  h2 {
+    font-size: 25px;
+  }
+
+  @keyframes slideIn {
+    0% {
+      transform: translateY(-100%);
+    }
+    100% {
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes slideOut {
+    0% {
+      transform: translateY(0);
+    }
+    100% {
+      transform: translateY(-100%);
+    }
+  }
 }
 
 </style>
