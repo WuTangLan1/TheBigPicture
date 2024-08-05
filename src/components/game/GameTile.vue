@@ -77,7 +77,6 @@ export default defineComponent({
                 }]" 
        @click="selectTile"
        :style="{ backgroundColor: backgroundColor }">
-    <!-- Conditionally display the spinner or the term -->
     <div v-if="gameStore.isLoading">
       <font-awesome-icon icon="spinner" spin />
     </div>
@@ -113,6 +112,7 @@ export default defineComponent({
     
   .game-tile:hover {
     transform: translateY(-3px);
+    transform: scale(1.1);
   }
   
   .starting-tile {

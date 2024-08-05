@@ -5,6 +5,32 @@ import { defineComponent, computed } from 'vue';
 import { useGameStore } from '@/stores/gameStore';
 
 export default defineComponent({
+  data() {
+  return {
+    showDropdown: false,
+  };
+  },
+  methods: {
+    toggleDropdown() {
+      this.showDropdown = !this.showDropdown;
+    },
+    shareOnTwitter() {
+      const text = `I scored ${this.percentageCorrect}% on MyGame! Check it out!`;
+      const url = 'http://www.yourgame.com';
+      const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`;
+      window.open(twitterUrl, '_blank');
+    },
+    shareOnFacebook() {
+      const url = 'http://www.yourgame.com';
+      const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`;
+      window.open(facebookUrl, '_blank');
+    },
+    shareOnWhatsApp() {
+      const text = `I scored ${this.percentageCorrect}% on MyGame! Check it out here: http://www.yourgame.com`;
+      const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(text)}`;
+      window.open(whatsappUrl, '_blank');
+    }
+  },
   setup() {
     const gameStore = useGameStore();
     const isModalVisible = computed(() => gameStore.isModalVisible);
@@ -58,15 +84,25 @@ export default defineComponent({
         </div>
       </div>
       <div class="button-container">
-        <button @click="exportResults" class="export-button">
-          <font-awesome-icon icon="file-export" /> Export Results
-        </button>
+        <div class="share-button-container">
+          <button @click="toggleDropdown" class="export-button">
+            <font-awesome-icon icon="file-export" /> Share Results
+            <font-awesome-icon icon="caret-down" />
+          </button>
+
+          <div v-if="showDropdown" class="dropdown-menu">
+            <button @click="shareOnTwitter" class="dropdown-item">Twitter</button>
+            <button @click="shareOnFacebook" class="dropdown-item">Facebook</button>
+            <button @click="shareOnWhatsApp" class="dropdown-item">WhatsApp</button>
+          </div>
+        </div>
+
         <button @click="closeModal" class="close-button">
           <font-awesome-icon icon="door-open" /> Close
         </button>
       </div>
-    </div>
   </div>
+</div>
 </template>
 
 <style scoped>
@@ -110,7 +146,6 @@ export default defineComponent({
   box-sizing: border-box; 
 }
 
-
 .correct {
   background-color: #4CAF50;
   color: white;
@@ -129,7 +164,13 @@ h1, p {
   display: flex;
   justify-content: space-between;
   width: 100%;
+  position: relative;
 }
+.share-button-container {
+  position: relative;
+  flex-grow: 1; 
+}
+
 
 .export-button, .close-button {
   padding: 12px 25px;
@@ -146,11 +187,38 @@ h1, p {
 .export-button {
   background-color: #007BFF;
   margin-right: 10px; 
+  width: 90%;
 }
 
 .export-button:hover {
   background-color: #0056b3;
   transform: scale(1.05);
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 100%; 
+  left: 0; 
+  background-color: #4994e4;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 95%; 
+  z-index: 10;
+  border-radius: 5px;
+  overflow: hidden; 
+}
+.dropdown-item {
+  padding: 10px 20px;
+  text-align: left;
+  display: block;
+  width: 100%;
+  border: none;
+  background-color: transparent;
+  color: #ffffff; 
+  cursor: pointer;
+}
+
+.dropdown-item:hover {
+  transform: translateY(-2px);
 }
 
 .close-button {
