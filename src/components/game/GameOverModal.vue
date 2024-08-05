@@ -210,7 +210,7 @@ h1, p {
   padding: 10px 20px;
   text-align: left;
   display: block;
-  width: 100%;
+  width: 95%;
   border: none;
   background-color: transparent;
   color: #ffffff; 
@@ -253,6 +253,14 @@ h1, p {
 
 .dark .close-button{
   background-color: #c14949; 
+}
+
+.dark .dropdown-item {
+  background-color: #7a2c76;
+}
+
+.dark .dropdown-menu {
+  background-color: #7a2c76;
 }
 
 
