@@ -1,32 +1,26 @@
 <!-- src\components\game\GameOverModal.vue -->
 
-<script lang="ts">
+<script>
 import { defineComponent, computed } from 'vue';
 import { useGameStore } from '@/stores/gameStore';
 
 export default defineComponent({
   setup() {
     const gameStore = useGameStore();
-
     const isModalVisible = computed(() => gameStore.isModalVisible);
     const guessDetails = computed(() => gameStore.guesses.map(guess => ({
       tile: guess.tile,
-      correct: guess.correct ? 'Correct' : 'Incorrect'  // Ensure this reflects the actual game state
+      correct: guess.correct ? 'Correct' : 'Incorrect'
     })));
+
     const gameStatusMessage = computed(() => gameStore.gameStatus === 'won' ? 'Congratulations, You Won!' : 'Game Over, You Lost');
+    const gameStatusIcon = computed(() => gameStore.gameStatus === 'won' ? 'trophy' : 'sad-cry');
 
     const performanceMessage = computed(() => {
       const correctGuesses = guessDetails.value.filter(g => g.correct === 'Correct').length;
       const totalGuesses = guessDetails.value.length;
       const percentageCorrect = totalGuesses > 0 ? (correctGuesses / totalGuesses) * 100 : 0;
-
-      if (percentageCorrect === 100) {
-        return 'Perfect game! All guesses were correct!';
-      } else if (percentageCorrect >= 50) {
-        return `Good effort! You got ${percentageCorrect.toFixed(2)}% of your guesses correct.`;
-      } else {
-        return 'Keep practicing! Less than half your guesses were correct.';
-      }
+      return percentageCorrect >= 50 ? `Good effort! You got ${percentageCorrect.toFixed(2)}% of your guesses correct.` : 'Keep practicing! Less than half your guesses were correct.';
     });
 
     function exportResults() {
@@ -44,7 +38,7 @@ export default defineComponent({
       gameStore.closeModal();
     }
 
-    return { isModalVisible, gameStatusMessage, performanceMessage, guessDetails, exportResults, closeModal };
+    return { isModalVisible, gameStatusMessage, gameStatusIcon, performanceMessage, guessDetails, exportResults, closeModal };
   }
 });
 </script>
@@ -52,17 +46,24 @@ export default defineComponent({
 <template>
   <div v-if="isModalVisible" class="game-over-modal">
     <div class="modal-content">
-      <h1>{{ gameStatusMessage }}</h1>
+      <h1>
+        <font-awesome-icon :icon="gameStatusIcon" /> {{ gameStatusMessage }}
+      </h1>
       <p>{{ performanceMessage }}</p>
       <div class="guesses-container">
         <div v-for="(guess, index) in guessDetails" :key="index"
              :class="['guess-item', guess.correct === 'Correct' ? 'correct' : 'incorrect']">
+          <font-awesome-icon :icon="guess.correct === 'Correct' ? 'check-circle' : 'times-circle'" />
           {{ guess.tile }}
         </div>
       </div>
       <div class="button-container">
-        <button @click="exportResults" class="export-button">Export Results</button>
-        <button @click="closeModal" class="close-button">Close</button>
+        <button @click="exportResults" class="export-button">
+          <font-awesome-icon icon="file-export" /> Export Results
+        </button>
+        <button @click="closeModal" class="close-button">
+          <font-awesome-icon icon="door-open" /> Close
+        </button>
       </div>
     </div>
   </div>
