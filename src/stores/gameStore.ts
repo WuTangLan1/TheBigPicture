@@ -104,6 +104,8 @@ export const useGameStore = defineStore('gameStore', {
       const isCorrect = tile === correctTile;
     
       this.guesses.push({ tile, correct: isCorrect });
+
+      console.log('guesses which should display at the end :', this.guesses)
     
       if (isCorrect) {
         this.selectedTiles.push(tile);
