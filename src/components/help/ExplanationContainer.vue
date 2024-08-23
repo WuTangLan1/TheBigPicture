@@ -70,11 +70,17 @@ export default defineComponent({
 }
 
 h2 {
-  color: #000000;
+  color: #000000; 
+  font-family: 'Arial Black', Gadget, sans-serif; 
+  font-size: clamp(16px, 5vw, 32px);
+  font-weight: bold; 
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.3); 
+  letter-spacing: 0.5px; 
 }
 
 .dark h2 {
   color: white;
+  text-shadow: 2px 2px 4px rgba(255,255,255,0.3); 
 }
 
 ol {
