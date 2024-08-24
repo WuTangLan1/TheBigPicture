@@ -188,8 +188,10 @@ h2 {
   .help-modal {
     position: relative;
     max-height: 68vh;
+    display: flex;
+    flex-direction: column;
     overflow-y: auto;
-    padding-bottom: 60px;
+    padding-bottom: 10px;
     transition: transform 0.5s ease-out;
     will-change: transform; 
     
@@ -198,22 +200,20 @@ h2 {
   .help-modal-overlay.visible .help-modal {
     transform: translate(-50%, -50%); 
   }
+
   .close-button {
-    display: block;            
-    width: auto;               
-    margin: 20px auto 0;     
+    position: relative; 
+    align-self: flex-end; 
+    margin-top: auto; 
     padding: 10px 20px;
     background-color: rgb(40, 116, 37);
+    border: 2px thick white;
     color: white;
+    border: 1px solid white;
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s;
-    text-align: right;        
-    position: relative;       
-    right: 0;                  
-    left: 0;                   
   }
-
 
   h2 {
     font-size: 25px;
