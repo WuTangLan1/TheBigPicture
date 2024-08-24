@@ -92,15 +92,15 @@ export default defineComponent({
   color: white;
   border: none;
   border-radius: 0.3rem;
-  padding: 10px;
+  padding: 5px;
   text-align: center;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 18px; 
   cursor: pointer;
-  width: 30px; 
-  height: 30px; 
+  width: 24px; 
+  height: 24px; 
   box-shadow: 0 2px 5px rgba(0,0,0,0.2);
 }
 
